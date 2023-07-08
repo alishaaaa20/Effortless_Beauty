@@ -14,7 +14,7 @@
     }
 
     .btn{
-        @apply bg-primaryColor py-[15px] px-[35] rounded-[50] text-white front-[600] mt-[38px]
+        @apply bg-primaryColor py-[15px] px-[35px] rounded-[50px] text-white font-[600] mt-[38px]
     }
 
     .heading{
@@ -26,7 +26,11 @@
     }
 
     .header {
-        @apply flex justify-between items-center py-[30px] px-[35px] bg-white;
+        @apply flex justify-between items-center py-[30px] px-[35px] bg-[url('./assets/images/mask.png')] bg-no-repeat bg-cover bg-center;
+    }
+
+    .hero__section {
+        @apply bg-[url('./assets/images/hero-image.jpg')] bg-no-repeat bg-cover bg-center h-[600px] flex items-center justify-center;
     }
 }
 
