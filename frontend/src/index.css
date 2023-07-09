@@ -34,7 +34,7 @@
     }
 
     .about_section {
-        @apply bg-[url('./assets/images/about.png')] bg-no-repeat bg-cover bg-center h-[600px] flex items-center justify-center;
+        @apply bg-[url('./assets/images/about.png')] bg-no-repeat bg-cover bg-center h-[600px] flex items-center justify-center  ;
     
     }
 }

@@ -5,6 +5,7 @@ import icons04 from '../assets/images/khalti-logo.jpg';
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import About from '../components/About/About';
+import ServiceList from '../components/Services/ServiceList';
 
 const Home = () => {
   return (
@@ -21,7 +22,9 @@ const Home = () => {
                 <p className="text__para text-white md:text-[16px]">
                   Save time and leave the stress behind. Book the best makeup artist for your wedding, party, or any other occasion.
                 </p>
-                <button className="btn">Request a Booking</button>
+                <Link to="/artists">
+                  <button className="btn">Request a Booking</button>
+                </Link>
               </div>
             </div>
           </div>
@@ -35,10 +38,10 @@ const Home = () => {
         <div className='container'>
           <div className='lg:w-[470px] mx-auto'>
             <h2 className='heading text-center text-[40px]'>
-              We provide the best makeup artists.
+              Need a Makeup Artist? We've got you.
             </h2>
             <p className="text__para text-center">
-              We have the suitable makeup artist for your occasion. We have a wide range of makeup artists who are experts in their field.
+            Just a few clicks away from your perfect makeup artist.
             </p>
 
           </div>
@@ -106,6 +109,28 @@ const Home = () => {
       {/*-----how it works section end-----*/}
 
       <About />
+
+      {/*-----services section starts-----*/}
+      <section>
+        <div className='container'>
+          <div className="xl:w-[470px] mx-auto">
+            <h2 className='heading text-center'>
+              Our Servies
+            </h2>
+            <p className='text__para text-center'>
+              We provide  Makeup Artists for all occasions. Have a Look and choose yours.
+            </p>
+          </div>
+
+          <ServiceList />
+
+        </div>
+      </section>
+
+
+
+
+      {/*-----services section ends-----*/}
     </>
   );
 };
