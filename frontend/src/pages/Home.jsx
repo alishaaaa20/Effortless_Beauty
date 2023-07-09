@@ -4,6 +4,7 @@ import icons03 from '../assets/images/icon03.png';
 import icons04 from '../assets/images/khalti-logo.jpg';
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
+import About from '../components/About/About';
 
 const Home = () => {
   return (
@@ -20,7 +21,7 @@ const Home = () => {
                 <p className="text__para text-white md:text-[16px]">
                   Save time and leave the stress behind. Book the best makeup artist for your wedding, party, or any other occasion.
                 </p>
-                <button className="btn">Request a Booking </button>
+                <button className="btn">Request a Booking</button>
               </div>
             </div>
           </div>
@@ -29,6 +30,7 @@ const Home = () => {
 
       {/*-----hero__section end ------*/}
 
+      {/*-----how it works section-----*/}
       <section>
         <div className='container'>
           <div className='lg:w-[470px] mx-auto'>
@@ -42,16 +44,16 @@ const Home = () => {
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]'>
-             <div className="py-[30px] px-5">
+            <div className="py-[30px] px-5">
               <div className='flex items-center justify-center'>
                 <img src={icons02} alt="" />
               </div>
               <div className='mt-[30px]'>
                 <h2 className='text-[22px] leading-9 text-headingColor font-[700] text-center'>
-                   Search a Makeup Artist
+                  Search a Makeup Artist
                 </h2>
                 <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>
-                    We have a perfect makeup artists near you.
+                  We have a perfect makeup artist near you.
                 </p>
 
                 <Link to="/artists" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
@@ -59,18 +61,18 @@ const Home = () => {
                 </Link>
 
               </div>
-             </div>
+            </div>
 
-             <div className="py-[30px] px-5">
+            <div className="py-[30px] px-5">
               <div className='flex items-center justify-center'>
                 <img src={icons03} alt="" />
               </div>
               <div className='mt-[30px]'>
                 <h2 className='text-[22px] leading-9 text-headingColor font-[700] text-center'>
-                   Book a Schedule
+                  Book a Schedule
                 </h2>
                 <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>
-                    We have a perfect makeup artists near you.
+                  We have a perfect makeup artist near you.
                 </p>
 
                 <Link to="/artists" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
@@ -78,18 +80,18 @@ const Home = () => {
                 </Link>
 
               </div>
-             </div>
+            </div>
 
-             <div className="py-[30px] px-5">
+            <div className="py-[30px] px-5">
               <div className='flex items-center justify-center'>
                 <img src={icons04} alt="" />
               </div>
               <div className='mt-[30px]'>
                 <h2 className='text-[22px] leading-9 text-headingColor font-[700] text-center'>
-                   Make a Pre-Payment
+                  Make a Pre-Payment
                 </h2>
                 <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>
-                    We provide a secure payment system where you can make a pre-payment through Khalti.
+                  We provide a secure payment system where you can make a pre-payment through Khalti.
                 </p>
 
                 <Link to="/artists" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
@@ -97,12 +99,18 @@ const Home = () => {
                 </Link>
 
               </div>
-             </div>
+            </div>
           </div>
         </div>
       </section>
+      {/*-----how it works section end-----*/}
+
+      <About />
     </>
   );
 };
 
 export default Home;
+
+
+
