@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import About from '../components/About/About';
 import ServiceList from '../components/Services/ServiceList';
+import makeupArtist from '../assets/images/makeupArtist.png';
 
 const Home = () => {
   return (
@@ -107,6 +108,46 @@ const Home = () => {
         </div>
       </section>
       {/*-----how it works section end-----*/}
+
+      {/*-----makeup artist register section-----*/}
+      <section>
+        <div className='container'>
+           <div className='flex justify-between gap-[50px] lg:gap-[130px] xl:gap-0 flex-col lg:flex-row'>
+             {/*-----makeup artist image-----*/}
+             <div className='relative w-3/4 lg:w-1/2 xl:w-[770px] z-10 order-2 lg:order-1'>
+                <img src={makeupArtist} alt="" height={500} width={500} />
+             </div>
+
+             <div className='w-full lg:w-1/2 xl:w-[670px] order-1 lg:order-2 '>
+            <h2 className='heading text-primaryColor text-center mt-[30px]'>
+              Want to Earn with us?
+            </h2>
+            <p className='text__para mt-[30px] text-[22px]'>
+               We provide a platform for you to showcase your talent and earn with us. You'll get more reach to the large audience. <br />
+         
+            </p>
+            <ul className='text__para text-[20px]'>
+            <li>Provide service at any time and on any day of the week.</li>
+             <li>Reach out to more customers and grow your business more.</li>
+             <li>Booking and Scheduling is much more easier.</li>
+             <li>Get your payment on time.</li>
+           </ul>
+               
+               
+               
+
+         
+             
+            
+            <Link to='/login'>
+              <button className='btn'>Register Now</button>
+            </Link>
+        
+        </div>
+           </div>
+        </div>
+      </section>
+      {/*-----makeup artist register section ends-----*/}
 
       <About />
 

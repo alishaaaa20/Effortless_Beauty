@@ -33,10 +33,7 @@
         @apply bg-[url('./assets/images/hero-image.jpg')] bg-no-repeat bg-cover bg-center h-[600px] flex items-center justify-center;
     }
 
-    .about_section {
-        @apply bg-[url('./assets/images/about.png')] bg-no-repeat bg-cover bg-center h-[600px] flex items-center justify-center  ;
     
-    }
 }
 
 @media only screen and (max-width: 1024px) {
