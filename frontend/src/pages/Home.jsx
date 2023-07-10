@@ -7,6 +7,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import About from '../components/About/About';
 import ServiceList from '../components/Services/ServiceList';
 import makeupArtist from '../assets/images/makeupArtist.png';
+import featureImg from '../assets/images/about-card.png';
 
 const Home = () => {
   return (
@@ -154,7 +155,7 @@ const Home = () => {
       <section>
         <div className='container'>
           <div className="xl:w-[470px] mx-auto">
-            <h2 className='heading text-center'>
+            <h2 className='heading text-center text-primaryColor'>
               Our Servies
             </h2>
             <p className='text__para text-center'>
@@ -164,45 +165,7 @@ const Home = () => {
 
           <ServiceList />
 
-          {/*-----services section ends-----*/}
-
-         {/*-----features section starts-----*/}
-
-         <section>
-          <div className='container'>
-            <div className='flex items-center justify-between flex-col lg:flex-row'>
-               {/*-----feature content-----*/}
-               <div className='xl:w-[700px]'>
-                  <h2 className='heading'>
-                    Get Virtual Booking <br /> Anytime, Anywhere.
-                  </h2>
-
-                  <ul className='pl-6 mt-[30px]'>
-                     <li className='text__para'>
-                      1. Schedule the booking directly with the makeup artist.
-                     </li>
-                     <li className='text__para'>
-                      2. Search the makeup artist near you.
-                     </li>
-                     <li className='text__para'>
-                      3. View our makeup artist's profile and choose the best one.
-                     </li>
-                     <li className='text__para'>
-                      4. Use the  Scheduling system to book the date and time.
-                     </li>
-                     <li className='text__para'>
-                      5. Make a pre-payment through Khalti.
-                     </li>
-                     <li className='text__para'>
-                      6. After that, see the makeup artist at your doorstep.
-                     </li>
-                  </ul>
-               </div>
-            </div>
-
-          </div>
-         </section>
-         {/*-----features section ends-----*/}
+       
         </div>
       </section>
 
@@ -210,6 +173,8 @@ const Home = () => {
 
 
       {/*-----services section ends-----*/}
+
+
     </>
   );
 };

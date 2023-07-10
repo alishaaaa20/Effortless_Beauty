@@ -6,13 +6,10 @@ const About = () => {
   return (
     <section>
       <div className='container'>
-        <div className='flex justify-between gap-[50px] lg:gap-[130px] xl:gap-0 flex-col lg:flex-row'>
-          {/*-----about image-----*/}
-          <div className='relative  z-10 order-1 lg:order-2 '>
-            <img src={aboutImg} alt="" height={480} width={480} />
-          </div>
+        <div className='flex items-center justify-between flex-col lg:flex-row'>
+        <div className='xl:w-[700px]'>
 
-          <div className='w-full lg:w-1/2 xl:w-[670px]'>
+        
             <h2 className='heading text-primaryColor mt-[35px] text-center'>
               Why Us?
             </h2>
@@ -26,8 +23,14 @@ const About = () => {
               <button className='btn'>Learn More</button>
             </Link>
           </div>
+
+           {/*-----about image-----*/}
+           <div className='relative z-10 xl:w-[770px] flex justify-end mt-[50px] lg:mt-0 '>
+            <img src={aboutImg} className="w-3/4" alt="" height={480} width={480} />
+          </div>
         </div>
-      </div>
+        </div>
+  
     </section>
   );
 };
