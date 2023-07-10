@@ -122,17 +122,16 @@ const Home = () => {
             <h2 className='heading text-primaryColor text-center mt-[30px]'>
               Want to Earn with us?
             </h2>
-            <p className='text__para mt-[30px] text-[22px]'>
+            <p className='text__para mt-[30px] text-[18px]'>
                We provide a platform for you to showcase your talent and earn with us. You'll get more reach to the large audience. <br />
          
             </p>
-            <ul className='text__para text-[20px]'>
-            <li>Provide service at any time and on any day of the week.</li>
-             <li>Reach out to more customers and grow your business more.</li>
-             <li>Booking and Scheduling is much more easier.</li>
-             <li>Get your payment on time.</li>
-           </ul>
-               
+            <ul className='pl-6 mt-[30px]'>
+            <li className='text__para'> 1. Provide service at any time and on any day of the week.</li>
+             <li className='text__para'> 2. Reach out to more customers and grow your business more.</li>
+             <li className='text__para'> 3. Booking and Scheduling is much more easier.</li>
+             <li className='text__para'> 4. Get your payment on time.</li>
+        </ul>
                
                
 
@@ -165,6 +164,45 @@ const Home = () => {
 
           <ServiceList />
 
+          {/*-----services section ends-----*/}
+
+         {/*-----features section starts-----*/}
+
+         <section>
+          <div className='container'>
+            <div className='flex items-center justify-between flex-col lg:flex-row'>
+               {/*-----feature content-----*/}
+               <div className='xl:w-[700px]'>
+                  <h2 className='heading'>
+                    Get Virtual Booking <br /> Anytime, Anywhere.
+                  </h2>
+
+                  <ul className='pl-6 mt-[30px]'>
+                     <li className='text__para'>
+                      1. Schedule the booking directly with the makeup artist.
+                     </li>
+                     <li className='text__para'>
+                      2. Search the makeup artist near you.
+                     </li>
+                     <li className='text__para'>
+                      3. View our makeup artist's profile and choose the best one.
+                     </li>
+                     <li className='text__para'>
+                      4. Use the  Scheduling system to book the date and time.
+                     </li>
+                     <li className='text__para'>
+                      5. Make a pre-payment through Khalti.
+                     </li>
+                     <li className='text__para'>
+                      6. After that, see the makeup artist at your doorstep.
+                     </li>
+                  </ul>
+               </div>
+            </div>
+
+          </div>
+         </section>
+         {/*-----features section ends-----*/}
         </div>
       </section>
 
