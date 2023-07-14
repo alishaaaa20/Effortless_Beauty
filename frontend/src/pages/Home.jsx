@@ -7,7 +7,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import About from '../components/About/About';
 import ServiceList from '../components/Services/ServiceList';
 import makeupArtist from '../assets/images/makeupArtist.png';
-import featureImg from '../assets/images/about-card.png';
+
 
 const Home = () => {
   return (
