@@ -7,6 +7,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import About from '../components/About/About';
 import ServiceList from '../components/Services/ServiceList';
 import makeupArtist from '../assets/images/makeupArtist.png';
+import ArtistList from '../components/Artists/ArtistList';
 
 
 const Home = () => {
@@ -39,7 +40,7 @@ const Home = () => {
       <section>
         <div className='container'>
           <div className='lg:w-[470px] mx-auto'>
-            <h2 className='heading text-center text-[40px]'>
+            <h2 className='heading text-center text-[40px] text-primaryColor'>
               Need a Makeup Artist? We've got you.
             </h2>
             <p className="text__para text-center">
@@ -96,7 +97,7 @@ const Home = () => {
                   Make a Pre-Payment
                 </h2>
                 <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'>
-                  We provide a secure payment system where you can make a pre-payment through Khalti.
+                  We provide a secure payment through Khalti.
                 </p>
 
                 <Link to="/artists" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
@@ -174,6 +175,23 @@ const Home = () => {
 
       {/*-----services section ends-----*/}
 
+      {/*-----Artist section starts-----*/}
+
+      <section>
+  <div className="container">
+    <div className="xl:w-[470px] mx-auto">
+      <h2 className="heading text-center text-primaryColor">
+        Top Makeup Artists
+      </h2>
+      <p className="text__para text-center">
+        Best and affordable makeup artists near you.
+      </p>
+    </div>
+    <ArtistList />
+  </div>
+</section>
+
+      {/*-----artist section ends-----*/}
 
     </>
   );
