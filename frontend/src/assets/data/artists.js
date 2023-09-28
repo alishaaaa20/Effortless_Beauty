@@ -11,7 +11,7 @@ export const artists = [
     totalRating: 272,
     photo: artistImg01,
     totalCustomers: 150,
-    location: "Sankhamul, Kathmandu",
+    location: "Kathmandu",
   },
   {
     id: "02",
