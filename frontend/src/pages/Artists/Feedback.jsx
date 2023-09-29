@@ -26,9 +26,9 @@ const Feedback = () => {
                 Jyoti Parajuli
               </h5>
               <p className='text-[14px] leading-6 text-textColor'>
-                {formateDate("01-14-2019")}
+                {formateDate("12-11-2019")}
               </p>
-              <p className='text__para mt-3 font-medium text-[15px]'> {/* Changed 'text_para' to 'text__para' and 'font_medium' to 'font-medium' */}
+              <p className='text__para mt-3 font-medium text-[15px]'> 
                 Good service, highly recommended 👍
               </p>
             </div>

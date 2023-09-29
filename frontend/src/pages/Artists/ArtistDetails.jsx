@@ -3,6 +3,7 @@ import artistImg from '../../assets/images/artist1.jpg';
 import ArtistAbout from "./ArtistAbout";
 import Feedback from "./Feedback";
 import starIcon from '../../assets/images/Star.png';
+import SidePanel from './SidePanel';
 
 
 const ArtistDetails = () => {
@@ -61,7 +62,12 @@ const ArtistDetails = () => {
               { tab === 'feedback' && <Feedback />}
             </div>
           </div>
+          <div>
+       <SidePanel />
+      </div> 
         </div>
+
+       
       </div>
     </section>
   );
