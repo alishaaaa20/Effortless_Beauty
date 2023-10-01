@@ -12,7 +12,7 @@ const ArtistSchema = new mongoose.Schema({
     type: String,
   },
 
-  // Fields for doctors only
+  // Fields for artists only
   specialization: { type: String },
   qualifications: {
     type: Array,
