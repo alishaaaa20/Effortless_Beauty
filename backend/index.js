@@ -7,6 +7,7 @@ import authRoute from "./Routes/auth.js";
 import userRoute from "./Routes/user.js";
 import artistRoute from "./Routes/artist.js";
 import reviewRoute from "./Routes/review.js";
+import bookingRoute from "./Routes/booking.js";
 
 
 dotenv.config();
@@ -46,6 +47,7 @@ app.use("/api/v1/auth", authRoute); //domain api/v1/auth/register
 app.use("/api/v1/users", userRoute); 
 app.use("/api/v1/artists", artistRoute); 
 app.use("/api/v1/reviews", reviewRoute); 
+app.use("/api/v1/booking", bookingRoute); 
 
 app.listen(port, () => {
     connectDB();

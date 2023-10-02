@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import Artist from "./ArtistSchema.js";
 
 const reviewSchema = new mongoose.Schema(
   {
-    doctor: {
+    artist: {
       type: mongoose.Types.ObjectId,
       ref: "Makeup Artist",
     },
@@ -32,6 +33,32 @@ reviewSchema.pre(/^find/, function (next) {
   });
 
   next();
+});
+
+reviewSchema.statics.calcAverageRatings = async function (artistId) {
+  // this points to current review
+
+  const stats = await this.aggregate([
+    {
+      $match: { artist: artistId },
+    },
+    {
+      $group: {
+        _id: "$artist",
+        numOfRating: { $sum: 1 },
+        avgRating: { $avg: "$rating" },
+      },
+    },
+  ]);
+
+  await Artist.findByIdAndUpdate(artistId, {
+    totalRating: stats[0].numOfRating,
+    averageRating: stats[0].avgRating,
+  });
+};
+
+reviewSchema.post("save", function () {
+  this.constructor.calcAverageRatings(this.artist);
 });
 
 export default mongoose.model("Review", reviewSchema);

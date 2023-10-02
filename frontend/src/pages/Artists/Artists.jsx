@@ -3,8 +3,7 @@ import { artists } from '../../assets/data/artists';
 import ArtistCard from '../../components/Artists/ArtistCard';
 
 const Artists = () => {
-  const [searchInput, setSearchInput] = useState(''); // You need to define `searchInput` and `setSearchInput` using `useState`
-
+  const [searchInput, setSearchInput] = useState(''); 
   return (
     <>
       <section className="bg-[#fff9ea]">
@@ -13,7 +12,7 @@ const Artists = () => {
           <div className="max-w-[570px] mt-[30px] mx-auto bg-[#0066ff2c] rounded-md flex items-center justify-between">
             <input
               type="search"
-              placeholder="Enter your location"
+              placeholder="Search Makeup Artists"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)} // Add an onChange handler to update `searchInput`
               className="py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor"
