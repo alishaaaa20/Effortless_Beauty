@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const ArtistSchema = new mongoose.Schema({
-  name: { type: String, required: true, },
-  email: { type: String, required: true, unique: true, },
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   phone: { type: Number },
-  location: { type: [Number], index: { type: '2dsphere', sparse: true}},
+  location: { type: [Number], index: '2dsphere', sparse: true},
   photo: { type: String },
   servicePrice: { type: Number },
   role: {
