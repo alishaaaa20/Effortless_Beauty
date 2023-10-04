@@ -2,6 +2,7 @@ import React, { useState } from 'react'; // Import useState if you plan to use i
 import { artists } from '../../assets/data/artists';
 import ArtistCard from '../../components/Artists/ArtistCard';
 
+
 const Artists = () => {
   const [searchInput, setSearchInput] = useState(''); 
   return (
@@ -30,7 +31,7 @@ const Artists = () => {
         <div className="container">
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
             {artists.map(artist => (
-              <ArtistCard key={artist.id} artist={artist} />
+              <ArtistCard key={artist._id} artist={artist} />
             ))}
           </div>
         </div>

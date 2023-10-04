@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import signupImg from '../assets/images/signup.gif';
 import avatar from '../assets/images/icon.jpeg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from "./../context/AuthContext"; 
+import { BASE_URL } from '../utils/config';
 
 
 const Signup = () => {
@@ -17,6 +19,9 @@ const Signup = () => {
     role: 'customer'
   })
 
+  const { dispatch } = useContext(AuthContext)
+  const navigate = useNavigate()
+
   const handleInputChange = e=> {
     setFormData({...formData, [e.target.name]:e.target.value})
   }
@@ -28,7 +33,26 @@ const Signup = () => {
   }
 
   const submitHandler = async event => {
-    event.preventDefault()
+    event.preventDefault();
+
+    try {
+      const res = await fetch(`${BASE_URL}/auth/register`, {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+
+      const result = await res.json()
+
+      if(!res.ok) alert(result.message)
+
+      dispatch({type: 'REGISTER_SUCCESS'})
+      navigate('/login')
+    } catch (err) {
+      alert(err.message)
+    }
   }
 
 
@@ -150,4 +174,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default Signup;

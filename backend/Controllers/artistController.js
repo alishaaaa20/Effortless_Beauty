@@ -68,3 +68,23 @@ export const getAllArtist = async (req,res) => {
         res.status(500).json({success:false, message:"Not found"})
     }
 }
+
+export const getArtistBySearch = async (req, res ) => {
+     
+    const city = new RegExp(req.query.city, "i");
+    const distance = parseInt(req.query.distance);
+
+    try {
+        const artists = await Artist.find({
+            isApproved: "approved",
+            location: city,
+            distance: { $gte: distance}
+        })
+
+        res.status(200).json({success:true, message:"Users found", data: artists})
+    }
+    catch (err) {
+
+        res.status(500).json({success:false, message:"Users not found"})
+    }
+}
