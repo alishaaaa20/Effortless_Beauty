@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../context/AuthContext"; 
 import { BASE_URL } from '../utils/config';
+import api from '../utils/api';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -22,31 +23,27 @@ const Login = () => {
     dispatch({ type: 'LOGIN_START' });
 
     try {
-      const res = await fetch(`${BASE_URL}/api/v1/login`, {
-        method: 'POST',
-        headers: {
-          'content-Type': 'application/json'
-        },
-        credentials: 'include', // Include credentials like cookies
-        body: JSON.stringify(formData)
-      });
+     // const res = await fetch(`${BASE_URL}/auth/login`, {
+     //   method: 'POST',
+     //   headers: {
+     //     'content-Type': 'application/json'
+      //  },
+       // credentials: 'include', // Include credentials like cookies
+       // body: JSON.stringify(formData)
+     // });
 
-
-      const result = await res.json();
-      
-      if (!res.ok) {
-        alert(result.message);
-        dispatch({ type: 'LOGIN_FAILURE', payload: result.message });
+     const { data } = await api.post('/auth/login', formData);
+ 
+      dispatch({ type: 'LOGIN_SUCCESS', payload: data.data });
+      dispatch({ type: 'SET_TOKEN', payload: data.token });
+      localStorage.setItem("token", data.token);
+     
+      if (data.role === 'admin') {
+        navigate('/admin');
       } else {
-        console.log(result.data);
-        dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
-       
-        if (result.data.role === 'admin') {
-          navigate('/admin');
-        } else {
-          navigate('/');
-        }
+        navigate('/');
       }
+
     
     } catch (err) {
       dispatch({ type: 'LOGIN_FAILURE', payload: err.message });

@@ -11,7 +11,22 @@ const useFetch = (url) => {
             setError(null); // Reset error when making a new request.
 
             try {
-                const res = await fetch(url);
+
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+                const token = localStorage.getItem("token") || null;
+
+                // If a token is provided, include it in the request headers
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                }
+
+                const res = await fetch(url, {
+                    method: 'GET',
+                    headers,
+                });
+
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch');

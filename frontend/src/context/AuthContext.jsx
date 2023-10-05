@@ -2,9 +2,11 @@ import { createContext, useEffect, useReducer } from "react";
 
 const initial_state = {
     user: localStorage.getItem("user") !== undefined ? JSON.parse(localStorage.getItem("user")) : null,
+    token: localStorage.getItem("token") || null,
     loading: false,
     error: null,
 };
+
 
 export const AuthContext = createContext(initial_state);
 
@@ -44,6 +46,16 @@ const AuthReducer = (state, action ) => {
                 loading: false,
                 error: null,
             }
+            case "SET_TOKEN":
+            return {
+                ...state,
+                token: action.payload,
+            };
+        case "CLEAR_TOKEN":
+            return {
+                ...state,
+                token: null,
+            };
 
         default :
             return state;

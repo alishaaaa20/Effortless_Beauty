@@ -16,7 +16,8 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const corsOptions = {
-    origin: true
+    origin: 'http://localhost:5175', // Replace with the actual origin of your frontend application
+  credentials: true,
 }
 
 app.get('/', (req, res) => {
