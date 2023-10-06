@@ -10,8 +10,7 @@ router.use("/:artistId/reviews", reviewRoute)
 
 router.get("/:id", getSingleArtist);
 router.get("/", getAllArtist);
-router.get("/search/getArtistBySearch", getArtistBySearch);
-router.get("/:id", authenticate, restrict(["artist"]), updateArtist);
+router.put("/:id", authenticate, restrict(["artist"]), updateArtist);
 router.get("/:id", authenticate, restrict(["artist"]), deleteArtist);
 
 export default router;

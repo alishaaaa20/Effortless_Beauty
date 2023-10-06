@@ -33,16 +33,23 @@ const Login = () => {
      // });
 
      const { data } = await api.post('/auth/login', formData);
+     console.log(data.data);
  
       dispatch({ type: 'LOGIN_SUCCESS', payload: data.data });
       dispatch({ type: 'SET_TOKEN', payload: data.token });
       localStorage.setItem("token", data.token);
      
-      if (data.role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/');
-      }
+      
+        if (data.role === 'admin') {
+          navigate('/admindashboard');
+        } else if (data.role === 'artist') {
+          navigate('/artistdashboard');
+        } else if (data.role === 'customer') {
+          navigate('/userdashboard');
+        }
+
+      
+      
 
     
     } catch (err) {

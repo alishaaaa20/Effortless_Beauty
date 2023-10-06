@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/:id", authenticate, restrict(["customer"]), getSingleUser);
 router.get("/", authenticate, restrict(["admin"]), getAllUser);
-router.get("/:id", authenticate, restrict(["customer"]), updateUser);
+router.put("/:id", authenticate, restrict(["customer"]), updateUser);
 router.get("/:id", authenticate, restrict(["customer"]), deleteUser);
 
 export default router;

@@ -5,6 +5,8 @@ import Signup from '../pages/Signup';
 import Contact from '../pages/Contact';
 import Artists from '../pages/Artists/Artists';
 import ArtistDetails from '../pages/Artists/ArtistDetails';
+import UserDashboard from "../components/User/Userdashboard";
+import ArtistDashboard from "../components/Artist/ArtistDashboard";
 
 import {Routes, Route} from 'react-router-dom'
 
@@ -18,6 +20,8 @@ const Router = () => {
     <Route path="/register" element={<Signup/>} />
     <Route path="/contact" element={<Contact/>} />
     <Route path="/services" element={<Services/>} />
+    <Route path="/userdashboard" element={<UserDashboard/>} />
+    <Route path="/artistdashboard" element={<ArtistDashboard/>} />
     
   </Routes>
 }

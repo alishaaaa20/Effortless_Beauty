@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { BiMenu } from 'react-icons/bi';
 import logo from '../../assets/images/logo.png';
 import userImg from '../../assets/images/avatar-icon.png';
 import { AuthContext } from '../../context/AuthContext';
+import api from "../../utils/api";
 
 const navLinks = [
   {
@@ -24,12 +25,27 @@ const navLinks = [
   },
 ];
 
+
 const Header = () => {
+
+
+  
+
+  const { dispatch } = useContext(AuthContext);
+  
 
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  console.log(user)
+  const logout = () => {
+    dispatch({type:"LOGOUT"})
+    navigate('/');
+
+  localStorage.removeItem("token");
+  }
 
   const handleStickyHeader = () => {
     if (
@@ -43,12 +59,18 @@ const Header = () => {
   };
 
   useEffect(() => {
+    
     window.addEventListener('scroll', handleStickyHeader);
 
     return () => {
       window.removeEventListener('scroll', handleStickyHeader);
     };
+
+    
   }, []);
+
+
+  
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -90,11 +112,13 @@ const Header = () => {
           </div>
 
           {/* ----------- nav right ---------- */}
+         
           
           <div className="flex items-center gap-4">
         
             <div className={!user && "hidden"}>
-              <Link to="/">
+            <Link to={user?.role === 'customer' ? '/userdashboard' : '/artistdashboard'}>
+
                  {user?.photo && <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
                   <img
                     src={user?.photo}
@@ -107,10 +131,19 @@ const Header = () => {
                 </div> }
                 
               </Link>
+              
             </div>
+            {!!user && <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]" onClick={logout}>
+              Logout
+            </button>}
+         
+         
+            
 
-            {
-  !user && (<Link to="/login">
+            {!user && 
+
+            
+            (<Link to="/login">
   <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">
     Login
   </button>

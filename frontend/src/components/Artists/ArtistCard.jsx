@@ -2,8 +2,12 @@ import React from 'react';
 import starIcon from '../../assets/images/Star.png';
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
+import useFetch from "../../hooks/useFetch";
+import {BASE_URL} from "../../utils/config";
 
 const ArtistCard = ({ artist }) => {
+
+  //const {data: artist} = useFetch(`${BASE_URL}/artists/${id}`)
   const {
     name,
     avgRating,

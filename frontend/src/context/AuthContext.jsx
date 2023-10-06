@@ -1,5 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 
+
 const initial_state = {
     user: localStorage.getItem("user") !== undefined ? JSON.parse(localStorage.getItem("user")) : null,
     token: localStorage.getItem("token") || null,
@@ -11,6 +12,7 @@ const initial_state = {
 export const AuthContext = createContext(initial_state);
 
 const AuthReducer = (state, action ) => {
+    
     switch (action.type) {
         case "LOGIN_START":
             return {

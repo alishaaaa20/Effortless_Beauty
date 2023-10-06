@@ -2,9 +2,14 @@ import Artist from "../models/ArtistSchema.js";
 
 export const updateArtist = async (req, res) => {
     const id = req.params.id;
-
+    console.log(id)
+    console.log(req.body)
     try {
-        const updatedArtist = await Artist.findByIdAndUpdate(id, { $set: req.body}, {new: true});
+        const updatedArtist = await Artist.findOneAndUpdate({_id:id},{
+            ...req.body
+        }, {new: true});
+        // const user=await Artist.findOne({_id:id})   
+        // console.log(user)
 
         res.status(200).json({success:true, message:"Updated successfully", data: updatedArtist});
     }
@@ -50,15 +55,15 @@ export const getAllArtist = async (req,res) => {
 
         if (query) {
             artists = await Artist.find({
-                isApproved:'approved',
+               
                 $or: [
                     { name: { $regex: query, $options: "i"}},
-                    { specialization: { $regex: query, $options: "i"}},
-                    { location: { $regex: query, $options: "i"}}
+                    { specialization: { $regex: query, $options: "i"}}
+                   
                 ],
             }).select("-password");
         }else {
-            artists = await Artist.find({isApproved: "approved"}).select("-password");
+            artists = await Artist.find().select("-password");
         }
         
 
@@ -76,9 +81,9 @@ export const getArtistBySearch = async (req, res ) => {
 
     try {
         const artists = await Artist.find({
-            isApproved: "approved",
-            location: city,
-            distance: { $gte: distance}
+            
+            name: { $regex: req.query.name, $options: "i"},
+            specialization: { $regex: req.query.specialization, $options: "i"},
         })
 
         res.status(200).json({success:true, message:"Users found", data: artists})

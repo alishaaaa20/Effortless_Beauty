@@ -4,42 +4,26 @@ const ArtistSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  phone: { type: Number },
-  location: { type: [Number], index: '2dsphere', sparse: true},
-  photo: { type: String },
-  servicePrice: { type: Number },
+  phone: { type: Number,default:0},
+  location: { type:String,default:""},
+  price: { type: Number,default:0},  
   role: {
     type: String,
   },
 
   // Fields for artists only
-  specialization: { type: String },
-  qualifications: {
-    type: Array,
+  specialization: { type: String,default:"" },
+  qualification: {
+    type: String,default:"" 
   },
 
-  experiences: {
-    type: Array,
+  experience: {
+    type: String,default:""
   },
-
-  bio: { type: String, maxLength: 50 },
-  about: { type: String },
-  timeSlots: { type: Array },
-  reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
-  averageRating: {
-    type: Number,
-    default: 0,
-  },
-  totalRating: {
-    type: Number,
-    default: 0,
-  },
-  isApproved: {
+  date: {
     type: String,
-    enum: ["pending", "approved", "cancelled"],
-    default: "pending",
-  },
-  appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
+    default:""
+  },  
 });
 
 export default mongoose.model("Makeup Artist", ArtistSchema);
