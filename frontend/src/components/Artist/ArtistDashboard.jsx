@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import "./ArtistDashboard.css"; // Import your CSS styles here
 import { AuthContext } from "../../context/AuthContext";
 import api from "../../utils/api";
-import SidePanel from "./SidePanel";
+
 
 const ArtistDashboard = () => {
   const [tab, setTab] = useState("about");
@@ -54,6 +54,7 @@ const ArtistDashboard = () => {
         console.log(data.error);
       }
       setFormData({
+        
         location: data.data.location,
         specialization: data.data.specialization,
         phone: data.data.phone,
@@ -72,7 +73,7 @@ const ArtistDashboard = () => {
             <div className="flex items-center gap-5">
               <div>
                 <div className="flex items-center gap-[6px]">
-                  <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[15px]">
+                  <p className="text__para text-[16px] leading-6 lg:max-w-[390px] md:text-[20px]">
                     Location:{" "}
                     {editMode ? (
                       <input
@@ -91,7 +92,7 @@ const ArtistDashboard = () => {
                     )}
                   </p>
                 </div>
-                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[15px]">
+                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[20px]">
                   Service:{" "}
                   {editMode ? (
                     <input
@@ -109,7 +110,7 @@ const ArtistDashboard = () => {
                     formData.specialization
                   )}
                 </p>
-                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[15px]">
+                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[20px]">
                   Phone:{" "}
                   {editMode ? (
                     <input
@@ -127,7 +128,7 @@ const ArtistDashboard = () => {
                     formData.phone
                   )}
                 </p>
-                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[15px]">
+                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[20px]">
                   Experience:{" "}
                   {editMode ? (
                     <input
@@ -145,7 +146,7 @@ const ArtistDashboard = () => {
                     formData.experience
                   )}
                 </p>
-                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[15px]">
+                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[20px]">
                   Qualification:{" "}
                   {editMode ? (
                     <input
@@ -164,7 +165,7 @@ const ArtistDashboard = () => {
                   )}
                 </p>
 
-                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[15px]">
+                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[20px]">
                   price:{" "}
                   {editMode ? (
                     <input
@@ -184,7 +185,7 @@ const ArtistDashboard = () => {
                 </p>
 
 
-                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[15px]">
+                <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[20px]">
                   date:{" "}
                   {editMode ? (
                     <input
@@ -228,9 +229,7 @@ const ArtistDashboard = () => {
               ) : null}
             </div>
           </div>
-          <div>
-            <SidePanel initialData={formData} />
-          </div>
+      
         </div>
       </div>
     </section>

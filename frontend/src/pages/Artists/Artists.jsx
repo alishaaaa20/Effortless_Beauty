@@ -13,7 +13,7 @@ const Artists = () => {
     e.preventDefault(); // Prevent form submission and page refresh
 
     try {
-      let endpoint = `${BASE_URL}/artists/getAllArtist`;
+      let endpoint = `${BASE_URL}/artists/search/getAllArtist`;
 
       // Check if searchInput contains alphabetic characters (assumed as a name)
       if (/[a-zA-Z]/.test(searchInput)) {
@@ -72,7 +72,7 @@ const Artists = () => {
         </div>
       </section>
 
-      <section>
+     <section>
         <div className="container">
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
             {filteredArtists.map(artist => (
@@ -81,14 +81,10 @@ const Artists = () => {
           </div>
         </div>
       </section>
-    </>
-  );
-};
 
+       {/*-----Artist section starts-----*/}
 
-      {/*-----Artist section starts-----*/}
-
-      <section>
+  <section>
   <div className="container">
     <div className="xl:w-[470px] mx-auto">
       <h2 className="heading text-center text-primaryColor">
@@ -98,11 +94,17 @@ const Artists = () => {
         Best and affordable makeup artists near you.
       </p>
     </div>
-    <ArtistList />
+    <ArtistList query={searchInput} />
   </div>
 </section>
 
       {/*-----artist section ends-----*/}
 
+    </>
+  );
+};
+
+
+     
 
 export default Artists;

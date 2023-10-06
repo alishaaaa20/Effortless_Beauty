@@ -9,13 +9,16 @@ const ArtistCard = ({ artist }) => {
 
   //const {data: artist} = useFetch(`${BASE_URL}/artists/${id}`)
   const {
+    _id,
     name,
-    avgRating,
-    totalRating,
     photo,
     specialization,
-    totalCustomers,
     location,
+    phone,
+    experience,
+    qualification,
+    price,
+    date,
   } = artist;
 
   return (
@@ -33,22 +36,36 @@ const ArtistCard = ({ artist }) => {
 
         <div className='flex items-center gap-[6px]'>
           <span className='flex items-center gap-[6px] text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-semibold text-headingColor'>
-            <img src={starIcon} alt="Star" /> {avgRating}
+            <img src={starIcon} alt="Star" /> 
           </span>
-          <span className='text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[400] text-textColor'>
-            ({totalRating})
-          </span>
+          
         </div>
       </div>
 
       <div className='mt-[18px] lg:mt-5 flex items-center justify-between'>
         <div>
-          <h3 className='text-[14px] leading-6 font-[400] text-textColor'>
-            +{totalCustomers} customers
-          </h3>
+          
           <p className='text-[14px] leading-6 font-[400] text-textColor'>
             Service: {specialization}
           </p>
+        
+          <p className='text-[14px] leading-6 font-[400] text-textColor'>
+            Phone: {phone}
+          </p>
+          <p className='text-[14px] leading-6 font-[400] text-textColor'>
+            Experience: {experience}
+          </p>
+          <p className='text-[14px] leading-6 font-[400] text-textColor'>
+            Qualification: {qualification}
+          </p>
+          <p className='text-[14px] leading-6 font-[400] text-textColor'>
+           Price Rs: {price}
+          </p>
+          <p className='text-[14px] leading-6 font-[400] text-textColor'>
+            Available Date: {date}
+          </p>
+          
+          
         </div>
 
         <Link to="/artists" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] flex items-center justify-center group hover:bg-primaryColor hover:border-none">
