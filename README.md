@@ -1,2 +1,2 @@
 # Effortless_Beauty
-A web-based application designed to connect individuals seeking makeup services with professional makeup artists.
+"Effortless Beauty" is your go-to web-based application for effortlessly connecting individuals with professional makeup artists, bringing the world of beauty to your fingertips. Designed with a sleek and intuitive interface, the platform seamlessly bridges the gap between those seeking personalized makeup services and talented makeup artists ready to elevate your beauty experience.
