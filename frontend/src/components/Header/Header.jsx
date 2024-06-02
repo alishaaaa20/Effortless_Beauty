@@ -1,76 +1,64 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { BiMenu } from 'react-icons/bi';
-import logo from '../../assets/images/logo.png';
-import userImg from '../../assets/images/avatar-icon.png';
-import { AuthContext } from '../../context/AuthContext';
-import api from "../../utils/api";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { BiMenu } from "react-icons/bi";
+import logo from "../../assets/images/logo.png";
+import { AuthContext } from "../../context/AuthContext";
 
 const navLinks = [
   {
-    path: '/home',
-    display: 'Home',
+    path: "/home",
+    display: "Home",
   },
   {
-    path: '/artists',
-    display: 'Find a Makeup Artists',
+    path: "/artists",
+    display: "Find a Makeup Artists",
   },
   {
-    path: '/services',
-    display: 'Services',
+    path: "/services",
+    display: "Services",
   },
   {
-    path: '/contact',
-    display: 'Contact',
+    path: "/contact",
+    display: "Contact",
   },
 ];
 
-
 const Header = () => {
-
-
-  
-
   const { dispatch } = useContext(AuthContext);
-  
 
   const headerRef = useRef(null);
   const menuRef = useRef(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
-  console.log(user)
-  const logout = () => {
-    dispatch({type:"LOGOUT"})
-    navigate('/');
+  const { user, role, token } = useContext(AuthContext);
 
-  localStorage.removeItem("token");
-  }
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
+  console.log(user);
+  // const logout = () => {
+  //   dispatch({ type: "LOGOUT" });
+  //   navigate("/");
+
+  //   localStorage.removeItem("token");
+  // };
 
   const handleStickyHeader = () => {
     if (
       document.body.scrollTop > 80 ||
       document.documentElement.scrollTop > 80
     ) {
-      headerRef.current.classList.add('sticky__header');
+      headerRef.current.classList.add("sticky__header");
     } else {
-      headerRef.current.classList.remove('sticky__header');
+      headerRef.current.classList.remove("sticky__header");
     }
   };
 
   useEffect(() => {
-    
-    window.addEventListener('scroll', handleStickyHeader);
+    window.addEventListener("scroll", handleStickyHeader);
 
     return () => {
-      window.removeEventListener('scroll', handleStickyHeader);
+      window.removeEventListener("scroll", handleStickyHeader);
     };
-
-    
   }, []);
-
-
-  
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -87,9 +75,7 @@ const Header = () => {
 
           {/* menu */}
           <div
-            className={`navigation ${
-              isMenuOpen ? 'show__menu' : ''
-            }`}
+            className={`navigation ${isMenuOpen ? "show__menu" : ""}`}
             ref={menuRef}
             onClick={toggleMenu}
           >
@@ -98,10 +84,10 @@ const Header = () => {
                 <li key={index}>
                   <NavLink
                     to={link.path}
-                    className={navClass =>
+                    className={(navClass) =>
                       navClass.isActive
-                        ? 'text-primaryColor text-[16px] leading-7 font-[600]'
-                        : 'text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor'
+                        ? "text-primaryColor text-[16px] leading-7 font-[600]"
+                        : "text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor"
                     }
                   >
                     {link.display}
@@ -112,43 +98,34 @@ const Header = () => {
           </div>
 
           {/* ----------- nav right ---------- */}
-         
-          
+
           <div className="flex items-center gap-4">
-        
-            <div className={!user && "hidden"}>
-            <Link to={user?.role === 'customer' ? '/userdashboard' : '/artistdashboard'}>
-
-                 {user?.photo && <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
-                  <img
-                    src={user?.photo}
-                    className="w-full rounded-full"
-                    alt=""
-                  />
-                </figure> }
-                {!!user && !user?.photo && <div >
-                 {user.name} 
-                </div> }
-                
+            {token && user ? (
+              <div>
+                <Link
+                  to={`${
+                    role === "artist"
+                      ? "/artists/profile/me"
+                      : "/users/profile/me"
+                  }`}
+                >
+                  <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
+                    <img
+                      src={user?.photo}
+                      className="w-full rounded-full"
+                      alt=""
+                    />
+                  </figure>
+                  <h2>{user?.name}</h2>
+                </Link>
+              </div>
+            ) : (
+              <Link to="/login">
+                <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">
+                  Login
+                </button>
               </Link>
-              
-            </div>
-            {!!user && <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]" onClick={logout}>
-              Logout
-            </button>}
-         
-         
-            
-
-            {!user && 
-
-            
-            (<Link to="/login">
-  <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">
-    Login
-  </button>
-</Link>)
-}
+            )}
 
             <span className="md:hidden" onClick={toggleMenu}>
               <BiMenu className="w-6 h-6 cursor-pointer" />
