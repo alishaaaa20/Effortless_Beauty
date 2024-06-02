@@ -43,6 +43,13 @@ export const register = async (req, res) => {
       });
     }
 
+    if (!isNameValid(name)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid name format",
+      });
+    }
+
     // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -117,6 +124,11 @@ function isPasswordValid(password) {
 function isEmailValid(email) {
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   return emailRegex.test(email);
+}
+
+function isNameValid(name) {
+  const nameRegex = /^[a-zA-Z\s]+$/;
+  return nameRegex.test(name);
 }
 
 

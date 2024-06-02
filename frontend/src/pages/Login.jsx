@@ -41,7 +41,7 @@ const Login = () => {
      
       
         if (data.role === 'admin') {
-          navigate('/admindashboard');
+          navigate('/dashboard');
         } else if (data.role === 'artist') {
           navigate('/artistdashboard');
         } else if (data.role === 'customer') {

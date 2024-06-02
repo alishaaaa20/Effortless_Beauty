@@ -26,7 +26,7 @@ const Home = () => {
                   Save time and leave the stress behind. Book the best makeup artist for your wedding, party, or any other occasion.
                 </p>
                 <Link to="/artists">
-                  <button className="btn">Request a Booking</button>
+                  <button className="btn">Search Artist </button>
                 </Link>
               </div>
             </div>
@@ -140,7 +140,7 @@ const Home = () => {
          
              
             
-            <Link to='/login'>
+            <Link to='/register'>
               <button className='btn'>Register Now</button>
             </Link>
         
@@ -177,19 +177,6 @@ const Home = () => {
 
       {/*-----Artist section starts-----*/}
 
-      <section>
-  <div className="container">
-    <div className="xl:w-[470px] mx-auto">
-      <h2 className="heading text-center text-primaryColor">
-        Top Makeup Artists
-      </h2>
-      <p className="text__para text-center">
-        Best and affordable makeup artists near you.
-      </p>
-    </div>
-    <ArtistList />
-  </div>
-</section>
 
       {/*-----artist section ends-----*/}
 

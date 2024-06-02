@@ -7,7 +7,7 @@ import Artists from '../pages/Artists/Artists';
 import ArtistDetails from '../pages/Artists/ArtistDetails';
 import UserDashboard from "../components/User/Userdashboard";
 import ArtistDashboard from "../components/Artist/ArtistDashboard";
-
+import Dashboard from "../admin/Dashboard";
 import {Routes, Route} from 'react-router-dom'
 
 const Router = () => {
@@ -22,6 +22,7 @@ const Router = () => {
     <Route path="/services" element={<Services/>} />
     <Route path="/userdashboard" element={<UserDashboard/>} />
     <Route path="/artistdashboard" element={<ArtistDashboard/>} />
+    <Route path="/dashboard" element={<Dashboard/>} />
     
   </Routes>
 }
