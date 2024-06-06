@@ -44,6 +44,17 @@ const MyAccount = () => {
             </button>
           </div>
         </div>
+
+        <div className="md:col-span-2  md:px-[30px] ">
+          <div>
+            <button className=" p-2 mr-5 px-5  text-md text-headingColor font-semibold leading-7 border border-solid  border-primaryColor rounded-md">
+              My Bookings
+            </button>
+            <button className=" py-2 px-5  text-md text-headingColor font-semibold leading-7 border border-solid  border-primaryColor rounded-md">
+              Profile Settings
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
