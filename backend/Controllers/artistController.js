@@ -100,7 +100,7 @@ export const getArtistProfile = async (req, res) => {
   const artistId = req.userId;
 
   try {
-    const artist = await Artist.findById(userId);
+    const artist = await Artist.findById(artistId);
 
     if (!artist) {
       return res

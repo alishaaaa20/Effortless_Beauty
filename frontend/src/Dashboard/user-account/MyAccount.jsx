@@ -1,12 +1,35 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import userImg from "../../assets/images/artist1.jpg";
 import { AuthContext } from "../../context/AuthContext";
 import MyBookings from "./MyBookings";
 import ProfileSettings from "./ProfileSettings";
+import useGetProfile from "../../hooks/useFetchData";
+import { BASE_URL } from "../../utils/config";
+import api from "../../utils/api";
 
 const MyAccount = () => {
   const { dispatch } = useContext(AuthContext);
   const [tab, setTab] = useState("bookings");
+  const { user } = useContext(AuthContext);
+  const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState(true);
+  //   const {
+  //     data: userData,
+  //     loading,
+  //     error,
+  //   } = useGetProfile(`${BASE_URL}/users/profile/me`);
+
+  //   console.log(userData, "userData");
+  useEffect(() => {
+    api.get(`/users/${user._id}`).then(({ data }) => {
+      console.log(data.data);
+      if (data.error) {
+        console.log(data.error);
+      }
+      setUserData(data.data);
+      setLoading(false);
+    });
+  }, [user._id]);
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
@@ -27,13 +50,13 @@ const MyAccount = () => {
             </div>
             <div className="mt-4 text-center">
               <h2 className="text-md leading-[30px] text-headingColor font-bold">
-                John Doe
+                {user.name}
               </h2>
               <p className="text-md text-textColor leading-6 font-medium">
-                example@gmail.com
+                {user.email}
               </p>
-              <p className="text-md text-textColor leading-6 font-medium">
-                1234567890
+              <p className="text-md capitalize text-textColor leading-6 font-medium">
+                {user.gender}
               </p>
             </div>
             <div className="mt-[50px] md:mt-[100px]">
