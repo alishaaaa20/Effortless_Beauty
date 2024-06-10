@@ -61,13 +61,16 @@ const MyAccount = () => {
               </div>
               <div className="mt-4 text-center">
                 <h2 className="text-md leading-[30px] text-headingColor font-bold">
-                  Manu Karkii
+                  {userData.name}
                 </h2>
                 <p className="text-md text-textColor leading-6 font-medium">
-                  example@gmail.com
+                  {userData.email}
                 </p>
                 <p className="text-md capitalize text-textColor leading-6 font-medium">
-                  Female
+                  {userData.gender}
+                </p>
+                <p className="text-md text-textColor leading-6 font-medium">
+                  {userData.location}
                 </p>
               </div>
               <div className="mt-[50px] md:mt-[100px]">

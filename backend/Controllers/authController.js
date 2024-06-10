@@ -162,6 +162,8 @@ export const login = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
+    // Implement the login logic here
+
     // Compare passwords
     const isPasswordMatch = await bcrypt.compare(
       req.body.password,
@@ -177,16 +179,19 @@ export const login = async (req, res) => {
     // Generate and return a JWT token if login is successful
     const token = generateToken(user);
 
+    console.log(user);
     const { password, role, appointments, ...rest } = user._doc;
-    res.status(200).json({
-      success: true,
-      message: "Login successful",
-      token,
-      data: { ...rest, role },
-      role,
-    });
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Login successful",
+        token,
+        data: { ...rest, role },
+        role,
+      });
   } catch (err) {
-    console.error(err);
+    console.error(err); // Log any errors
     res.status(500).json({ success: false, message: "Failed to login" }); // Handle errors gracefully
   }
 };

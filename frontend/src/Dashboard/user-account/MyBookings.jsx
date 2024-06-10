@@ -1,5 +1,5 @@
 import React from "react";
-import useFetchData from "../../hooks/useFetchData";
+import useFetchData from "../../hooks/useFetch";
 import ArtistCard from "../../components/Artists/ArtistCard";
 import Loading from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
