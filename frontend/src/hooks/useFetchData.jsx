@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { token } from "../config";
+import { token } from "../utils/config";
 
 const useFetchData = (url) => {
   const [data, setData] = useState([]);
@@ -17,16 +17,15 @@ const useFetchData = (url) => {
         });
 
         const result = await res.json();
-        console.log(result, "result");
 
         if (!res.ok) {
           throw new Error(result.message + "🙁");
         }
         setData(result.data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
         setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        setError(err.message);
       }
     };
 
