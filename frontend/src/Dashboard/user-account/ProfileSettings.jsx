@@ -13,7 +13,7 @@ const ProfileSettings = ({ user }) => {
     email: "",
     photo: null,
     gender: "",
-    location: "null",
+    location: "",
   });
 
   const navigate = useNavigate();
