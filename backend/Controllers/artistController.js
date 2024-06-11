@@ -13,8 +13,6 @@ export const updateArtist = async (req, res) => {
       },
       { new: true }
     );
-    // const user=await Artist.findOne({_id:id})
-    // console.log(user)
 
     res.status(200).json({
       success: true,
