@@ -9,6 +9,7 @@ import { AuthContext } from "../../context/AuthContext";
 import artistImg from "../../assets/images/artist1.jpg";
 import starIcon from "../../assets/images/Star.png";
 import ArtistAbout from "../../pages/Artists/ArtistAbout";
+import Profile from "./Profile";
 
 const ArtistProfile = () => {
   const [userData, setUserData] = useState({});
@@ -97,8 +98,12 @@ const ArtistProfile = () => {
                     />
                   </div>
                 )}
-                {tab === "appointments" && <div>Profile</div>}
-                {tab === "settings" && <div>Profile Settings</div>}
+                {tab === "appointments" && <div>Appointments</div>}
+                {tab === "settings" && (
+                  <div>
+                    <Profile />
+                  </div>
+                )}
               </div>
             </div>
           </div>
