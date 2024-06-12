@@ -77,13 +77,14 @@ export const getAllArtist = async (req, res) => {
 };
 
 export const getArtistBySearch = async (req, res) => {
-  const city = new RegExp(req.query.city, "i");
+  const location = new RegExp(req.query.location, "i");
   const distance = parseInt(req.query.distance);
 
   try {
     const artists = await Artist.find({
       name: { $regex: req.query.name, $options: "i" },
       specialization: { $regex: req.query.specialization, $options: "i" },
+      location: { $regex: req.query.location, $options: "i" },
     });
 
     res
