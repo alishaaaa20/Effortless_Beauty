@@ -63,30 +63,30 @@ const ArtistProfile = () => {
                     <div className="flex items-center gap-4 mb-16">
                       <figure className="max-w-[200px] max-h-[200px]">
                         <img
-                          src={data.photo ? data.photo : artistImg}
+                          src={data?.photo ? data.photo : artistImg}
                           alt="profile"
                           className="w-full rounded"
                         />
                       </figure>
                       <div>
                         <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-4 lg:py-2 lg:px-6 rounded text-md leading-4 lg:text-lg lg:leading-6 font-semibols">
-                          {data.location} Baneshwor
+                          {data.location}
                         </span>
 
                         <h3 className="text-[22px] leading-9 font-bold text-headingColor mt-3">
-                          Alisha Rai
+                          {data.name}
                         </h3>
                         <div className="flex items-center gap-[6px]">
                           <span className="flex items-center gap-[6px] text-headingColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
                             <img src={starIcon} alt="star" />
-                            4.5
+                            {data.averageRating ? data.averageRating : 0}
                           </span>
                           <span className="text-textColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
-                            (200)
+                            ({data.totalReviews ? data.totalReviews : 0})
                           </span>
                         </div>
                         <p className="text__para font-[15px] lg:max-w-[400px] leading-6">
-                          artist bio
+                          {data?.bio ? data.bio : "No bio available"}
                         </p>
                       </div>
                     </div>
@@ -101,7 +101,7 @@ const ArtistProfile = () => {
                 {tab === "appointments" && <div>Appointments</div>}
                 {tab === "settings" && (
                   <div>
-                    <Profile />
+                    <Profile artistData={data} />
                   </div>
                 )}
               </div>

@@ -1,42 +1,101 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
+import uploadImageToCloudinary from "../../utils/uploadCloudinary";
+import { BASE_URL, token } from "../../utils/config";
+import { toast } from "react-toastify";
 
-export default function Profile() {
+export default function Profile({ artistData }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
+    location: "",
     bio: "",
     gender: "",
     specialization: "",
     ticketPrice: "",
-    qualifications: [
-      { startingDate: "", endingDate: "", degree: "", institution: "" },
-    ],
-    experiences: [
-      { startingDate: "", endingDate: "", position: "", institution: "" },
-    ],
-    timeSlots: [{ day: "", startingTime: "", endingTime: "" }],
+    qualifications: [],
+    experiences: [],
+    timeSlots: [],
     about: "",
     photo: null,
   });
+
+  useEffect(() => {
+    setFormData({
+      name: artistData?.name,
+      email: artistData?.email,
+      phone: artistData?.phone,
+      location: artistData?.location,
+      bio: artistData?.bio,
+      gender: artistData?.gender,
+      specialization: artistData?.specialization,
+      ticketPrice: artistData?.ticketPrice,
+      qualifications: artistData?.qualifications,
+      experiences: artistData?.experiences,
+      timeSlots: artistData?.timeSlots,
+      about: artistData?.about,
+      photo: artistData?.photo,
+    });
+  }, [artistData]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileInputChange = (e) => {
-    setFormData({ ...formData, photo: e.target.files[0] });
+  const handleFileInputChange = async (e) => {
+    const file = e.target.files[0];
+    const data = await uploadImageToCloudinary(file);
+
+    setFormData({ ...formData, photo: data?.url });
   };
 
   const updateProfileHandler = async (e) => {
     e.preventDefault();
+
+    try {
+      const res = await fetch(`${BASE_URL}/artists/${artistData._id}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message);
+      }
+
+      toast.success(result.message);
+      window.location.reload();
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   const addItem = (key, index) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [key]: [...prevFormData[key], index],
+    }));
+  };
+
+  const handleReusableInputChangeFunc = (key, index, e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => {
+      const updatedItems = [...prevFormData[key]];
+      updatedItems[index][name] = value;
+      return { ...prevFormData, [key]: updatedItems };
+    });
+  };
+
+  const deleteItem = (key, index) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [key]: prevFormData[key].filter((_, i) => i !== index),
     }));
   };
 
@@ -48,6 +107,52 @@ export default function Profile() {
       degree: "",
       institution: "",
     });
+  };
+
+  const handleQualificationChange = (e, index) => {
+    handleReusableInputChangeFunc("qualifications", index, e);
+  };
+
+  const deleteQualification = (e, index) => {
+    e.preventDefault();
+    deleteItem("qualifications", index);
+  };
+
+  const addExperience = (e) => {
+    e.preventDefault();
+    addItem("experiences", {
+      startingDate: "",
+      endingDate: "",
+      position: "",
+      company: "",
+    });
+  };
+
+  const handleExperienceChange = (e, index) => {
+    handleReusableInputChangeFunc("experiences", index, e);
+  };
+
+  const deleteExperience = (e, index) => {
+    e.preventDefault();
+    deleteItem("experiences", index);
+  };
+
+  const addTimeSlot = (e) => {
+    e.preventDefault();
+    addItem("timeSlots", {
+      day: "",
+      startingTime: "",
+      endingTime: "",
+    });
+  };
+
+  const handleTimeSlotChange = (e, index) => {
+    handleReusableInputChangeFunc("timeSlots", index, e);
+  };
+
+  const deleteTimeSlot = (e, index) => {
+    e.preventDefault();
+    deleteItem("timeSlots", index);
   };
 
   return (
@@ -87,6 +192,17 @@ export default function Profile() {
             placeholder="Enter your phone number"
             className="form__input"
             value={formData.phone}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mb-5">
+          <p className="form__label">Location*</p>
+          <input
+            type="location"
+            name="location"
+            placeholder="Enter your location"
+            className="form__input"
+            value={formData.location}
             onChange={handleInputChange}
           />
         </div>
@@ -161,7 +277,7 @@ export default function Profile() {
                       placeholder="Starting Date"
                       className="form__input"
                       value={item.startingDate}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
                   <div>
@@ -172,7 +288,7 @@ export default function Profile() {
                       placeholder="Ending Date"
                       className="form__input"
                       value={item.endingDate}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
                 </div>
@@ -185,7 +301,7 @@ export default function Profile() {
                       placeholder="Degree"
                       className="form__input"
                       value={item.degree}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
                   <div>
@@ -196,11 +312,14 @@ export default function Profile() {
                       placeholder="Institution"
                       className="form__input"
                       value={item.institution}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
                 </div>
-                <button className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px] cursor-pointer">
+                <button
+                  onClick={(e) => deleteQualification(e, index)}
+                  className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px] cursor-pointer"
+                >
                   <AiOutlineDelete />
                 </button>
               </div>
@@ -227,7 +346,7 @@ export default function Profile() {
                       placeholder="Starting Date"
                       className="form__input"
                       value={item.startingDate}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
                   <div>
@@ -238,7 +357,7 @@ export default function Profile() {
                       placeholder="Ending Date"
                       className="form__input"
                       value={item.endingDate}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
                 </div>
@@ -251,28 +370,34 @@ export default function Profile() {
                       placeholder="Position"
                       className="form__input"
                       value={item.position}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
                   <div>
-                    <p className="form__label">Institution*</p>
+                    <p className="form__label">Company*</p>
                     <input
                       type="text"
-                      name="institution"
-                      placeholder="Institution"
+                      name="company"
+                      placeholder="Company"
                       className="form__input"
-                      value={item.institution}
-                      onChange={handleInputChange}
+                      value={item.company}
+                      onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
                 </div>
-                <button className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px] cursor-pointer">
+                <button
+                  onClick={(e) => deleteExperience(e, index)}
+                  className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px] cursor-pointer"
+                >
                   <AiOutlineDelete />
                 </button>
               </div>
             </div>
           ))}
-          <button className="bg-black py-2 px-5 rounded  h-fit text-white cursor-pointer">
+          <button
+            onClick={addExperience}
+            className="bg-black py-2 px-5 rounded  h-fit text-white cursor-pointer"
+          >
             Add Experience
           </button>
         </div>
@@ -287,7 +412,7 @@ export default function Profile() {
                     <select
                       name="day"
                       value={item.day}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleTimeSlotChange(e, index)}
                       className="form__input py-3.5 px-4 w-full border bg-white border-primaryColor rounded-md focus:outline-none focus:ring-2 focus:ring-primaryColor focus:border-transparent"
                     >
                       <option value="">Select</option>
@@ -308,7 +433,7 @@ export default function Profile() {
                       placeholder="Ending Date"
                       className="form__input"
                       value={item.startingTime}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleTimeSlotChange(e, index)}
                     />
                   </div>
                   <div>
@@ -319,11 +444,14 @@ export default function Profile() {
                       placeholder="Ending Date"
                       className="form__input"
                       value={item.endingTime}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleTimeSlotChange(e, index)}
                     />
                   </div>
                   <div className="flex items-center">
-                    <button className="bg-red-600 p-2 rounded-full text-white text-[18px]   cursor-pointer mt-8">
+                    <button
+                      onClick={(e) => deleteTimeSlot(e, index)}
+                      className="bg-red-600 p-2 rounded-full text-white text-[18px]   cursor-pointer mt-8"
+                    >
                       <AiOutlineDelete />
                     </button>
                   </div>
@@ -331,7 +459,10 @@ export default function Profile() {
               </div>
             </div>
           ))}
-          <button className="bg-black py-2 px-5 rounded  h-fit text-white cursor-pointer">
+          <button
+            onClick={addTimeSlot}
+            className="bg-black py-2 px-5 rounded  h-fit text-white cursor-pointer"
+          >
             Add Timeslot
           </button>
         </div>
