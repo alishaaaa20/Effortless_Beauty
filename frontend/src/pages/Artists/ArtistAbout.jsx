@@ -5,7 +5,7 @@ const ArtistAbout = ({ name, about, qualifications, experiences }) => {
   return (
     <div>
       <div>
-        <h3 className="text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2">
+        <h3 className="text-[20px] mt-[100px] leading-[30px] text-headingColor font-semibold flex items-center gap-2">
           About
           <span className="text-[20px] font-bold text-irisBlurColor leading-9">
             {name}

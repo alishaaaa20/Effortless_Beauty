@@ -69,7 +69,10 @@ const ProfileSettings = ({ user }) => {
 
       setLoading(false);
       toast.success(message);
-      window.location.href = "/users/profile/me";
+
+      setTimeout(() => {
+        window.location.href = "/users/profile/me";
+      }, 5000);
     } catch (err) {
       toast.error(err.message);
       setLoading(false);

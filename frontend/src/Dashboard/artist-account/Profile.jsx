@@ -70,7 +70,9 @@ export default function Profile({ artistData }) {
       }
 
       toast.success(result.message);
-      window.location.reload();
+      setTimeout(() => {
+        window.location.href = "/artists/profile/me";
+      }, 2000);
     } catch (err) {
       toast.error(err.message);
     }

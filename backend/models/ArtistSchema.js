@@ -6,6 +6,7 @@ const ArtistSchema = new mongoose.Schema({
   name: { type: String, required: true },
   phone: { type: Number },
   location: { type: String },
+  gender: { type: String, enum: ["male", "female", "other"] },
   photo: { type: String },
   ticketPrice: { type: Number },
   role: {
