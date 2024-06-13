@@ -1,27 +1,64 @@
 import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
+import { useParams } from "react-router-dom";
+import { BASE_URL, token } from "../../utils/config";
+import { toast } from "react-toastify";
+import HashLoader from "react-spinners/HashLoader";
 
 const FeedbackForm = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { id } = useParams();
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    // Later we will use an API to submit the review.
+    try {
+      if (!rating || !reviewText) {
+        setLoading(false);
+        toast.error("Please provide rating and review text");
+        return; // Exit the function if rating or reviewText is missing
+      }
+
+      const response = await fetch(`${BASE_URL}/artists/${id}/reviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          rating,
+          reviewText,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message);
+      }
+
+      setLoading(false);
+      toast.success(result.message);
+    } catch (err) {
+      setLoading(false);
+      toast.error(err.message);
+    }
   };
 
   return (
-    <form action="">
+    <form onSubmit={handleSubmitReview}>
       <div>
         <h3 className="text-headingColor text-base font-semibold mb-4 mt-0">
           How would you rate the overall service?*
         </h3>
         <div>
-          {[...Array(5).keys()].map((index) => {
+          {[...Array(5)].map((_, index) => {
             index += 1;
-
             return (
               <button
                 key={index}
@@ -35,9 +72,7 @@ const FeedbackForm = () => {
                 onMouseEnter={() => setHover(index)}
                 onMouseLeave={() => setHover(0)}
               >
-                <span>
-                  <AiFillStar />
-                </span>
+                <AiFillStar />
               </button>
             );
           })}
@@ -53,14 +88,11 @@ const FeedbackForm = () => {
           rows="5"
           placeholder="Write your feedback here..."
           onChange={(e) => setReviewText(e.target.value)}
+          value={reviewText}
         ></textarea>
       </div>
-      <button
-        type="submit"
-        className="btn"
-        onClick={handleSubmitReview}
-      >
-        Submit Feedback
+      <button type="submit" className="btn" disabled={loading}>
+        {loading ? <HashLoader color="#fff" size={25} /> : "Submit Feedback"}
       </button>
     </form>
   );

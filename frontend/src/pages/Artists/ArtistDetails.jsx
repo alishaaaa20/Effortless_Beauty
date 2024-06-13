@@ -5,7 +5,7 @@ import Feedback from "./Feedback";
 import starIcon from "../../assets/images/Star.png";
 import SidePanel from "./SidePanel";
 import { BASE_URL } from "../../utils/config";
-import useFetchData from "../../hooks/useFetchData";
+import useFetch from "../../hooks/useFetch";
 import Loader from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
 import { useParams } from "react-router-dom";
@@ -17,7 +17,7 @@ const ArtistDetails = () => {
     data: artist,
     loading,
     error,
-  } = useFetchData(`${BASE_URL}/artists/${id}`);
+  } = useFetch(`${BASE_URL}/artists/${id}`);
 
   console.log(artist, "artist");
 
@@ -97,9 +97,25 @@ const ArtistDetails = () => {
                 </button>
               </div>
 
-              <div className="mt-[50px]">
-                {tab === "about" && <ArtistAbout />}
-                {tab === "feedback" && <Feedback />}
+              <div>
+                {tab === "about" && (
+                  <ArtistAbout
+                    name={name}
+                    qualifications={qualifications}
+                    experiences={experiences}
+                    timeSlots={timeSlots}
+                    bio={bio}
+                    photo={photo}
+                    about={about}
+                    averageRating={averageRating}
+                    specialization={specialization}
+                    ticketPrice={ticketPrice}
+                    location={location}
+                  />
+                )}
+                {tab === "feedback" && (
+                  <Feedback reviews={reviews} totalRating={totalRating} />
+                )}
               </div>
             </div>
             <div>
