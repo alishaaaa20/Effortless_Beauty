@@ -121,6 +121,26 @@ const Signup = () => {
                   required
                 />
               </div>
+              {/* <div className="mb-5">
+                <input
+                  type="number"
+                  placeholder="Phone Number"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+                />
+              </div>
+              <div className="mb-5">
+                <input
+                  type="location"
+                  placeholder="Location"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+                />
+              </div> */}
               <div className="mb-5 flex items-center justify-between">
                 <label className="text-headingColor font-bold text-[16px] leading-7">
                   Are you a:
@@ -132,6 +152,7 @@ const Signup = () => {
                   >
                     <option value="artist">Makeup Artist</option>
                     <option value="customer">Customer</option>
+                    required
                   </select>
                 </label>
 
@@ -146,6 +167,7 @@ const Signup = () => {
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
+                    required
                   </select>
                 </label>
               </div>
@@ -169,6 +191,7 @@ const Signup = () => {
                     onChange={handleFileInputChange}
                     accept=".jpg, .jpeg, .png"
                     className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                    required
                   />
 
                   <label

@@ -116,7 +116,6 @@ const Header = () => {
                       alt=""
                     />
                   </figure>
-                  <h2>{user?.name}</h2>
                 </Link>
               </div>
             ) : (

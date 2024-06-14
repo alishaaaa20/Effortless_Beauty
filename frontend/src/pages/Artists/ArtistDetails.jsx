@@ -52,7 +52,7 @@ const ArtistDetails = () => {
 
                 <div>
                   <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-6 lg:py-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded">
-                    {location}
+                    {specialization}
                   </span>
                   <h3 className="text-headingColor text-[22px] leading-9 mt-3 font-bold">
                     {name}
@@ -60,10 +60,10 @@ const ArtistDetails = () => {
 
                   <div className="flex items-center gap-[6px]">
                     <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
-                      <img src={starIcon} alt="" /> {averageRating || 0}
+                      <img src={starIcon} alt="" /> {averageRating}
                     </span>
                     <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
-                      ({totalRating || 0})
+                      ({totalRating})
                     </span>
                   </div>
                   <p className="text__para text-[14px] leading-6 lg:max-w-[390px] md:text-[15px]">
@@ -103,13 +103,11 @@ const ArtistDetails = () => {
                     name={name}
                     qualifications={qualifications}
                     experiences={experiences}
-                    timeSlots={timeSlots}
                     bio={bio}
                     photo={photo}
                     about={about}
                     averageRating={averageRating}
                     specialization={specialization}
-                    ticketPrice={ticketPrice}
                     location={location}
                   />
                 )}
@@ -119,7 +117,11 @@ const ArtistDetails = () => {
               </div>
             </div>
             <div>
-              <SidePanel />
+              <SidePanel
+                artistId={artist._id}
+                ticketPrice={ticketPrice}
+                timeSlots={timeSlots}
+              />
             </div>
           </div>
         )}

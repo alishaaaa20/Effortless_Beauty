@@ -108,6 +108,7 @@ export default function Profile({ artistData }) {
       endingDate: "",
       degree: "",
       institution: "",
+      photo: "",
     });
   };
 
@@ -316,6 +317,32 @@ export default function Profile({ artistData }) {
                       value={item.institution}
                       onChange={(e) => handleQualificationChange(e, index)}
                     />
+                  </div>
+                </div>
+                <div className="mt-5 flex items-center gap-3">
+                  <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
+                    <img
+                      src={item.photo}
+                      alt=""
+                      className="w-full rounded-full"
+                    />
+                  </figure>
+
+                  <div className="relative w-[130px] h-[50px]">
+                    <input
+                      type="file"
+                      name="photo"
+                      id="customFile"
+                      className="absolute w-full h-full opacity-0 top-0 left-0 cursor-pointer"
+                      onChange={(e) => handleQualificationChange(e, index)}
+                      accept=".jpg, .jpeg, .png"
+                    />
+                    <label
+                      htmlFor="customFile"
+                      className="absolute top-0 left-0 w-ful h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
+                    >
+                      Upload Certificate Photo
+                    </label>
                   </div>
                 </div>
                 <button

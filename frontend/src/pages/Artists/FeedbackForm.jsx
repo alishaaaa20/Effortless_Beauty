@@ -44,6 +44,10 @@ const FeedbackForm = () => {
 
       setLoading(false);
       toast.success(result.message);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (err) {
       setLoading(false);
       toast.error(err.message);

@@ -10,7 +10,8 @@ const ArtistCard = ({ artist }) => {
     name,
     photo,
     location,
-    avgRating,
+    specialization,
+    averageRating,
     totalRating,
     totalCustomers,
     experiences,
@@ -28,12 +29,12 @@ const ArtistCard = ({ artist }) => {
 
       <div className="mt-2 lg:mt-4 flex items-center justify-between">
         <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded">
-          {location}
+          {specialization}
         </span>
 
         <div className="flex items-center gap-[6px]">
           <span className="flex items-center gap-[6px] text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
-            <img src={starIcon} alt="Star" /> {avgRating || 0}
+            <img src={starIcon} alt="Star" /> {averageRating || 0}
           </span>
           <span className="text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-semibold text-textColor">
             ({totalRating || 0})
