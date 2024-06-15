@@ -12,6 +12,7 @@ import { Routes, Route } from "react-router-dom";
 import MyAccount from "../Dashboard/user-account/MyAccount";
 import ArtistProfile from "../Dashboard/artist-account/ArtistProfile";
 import ProjectedRoute from "./ProjectedRoute";
+import CheckoutSuccess from "../pages/CheckoutSuccess";
 
 const Router = () => {
   return (
@@ -27,6 +28,7 @@ const Router = () => {
       <Route path="/userdashboard" element={<UserDashboard />} />
       <Route path="/artistdashboard" element={<ArtistDashboard />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route
         path="/users/profile/me"
         element={

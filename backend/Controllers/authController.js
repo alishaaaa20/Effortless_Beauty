@@ -14,7 +14,8 @@ const generateToken = (user) => {
 };
 
 export const register = async (req, res) => {
-  const { email, password, name, role, photo, gender } = req.body;
+  const { email, password, name, role, photo, gender, phone, location } =
+    req.body;
 
   try {
     let user = null;
@@ -68,6 +69,8 @@ export const register = async (req, res) => {
         photo,
         gender,
         role,
+        phone,
+        location,
       });
     }
 
@@ -80,9 +83,11 @@ export const register = async (req, res) => {
         photo,
         gender,
         role,
+        phone,
+        location,
       });
     }
-
+    console.log("Saving user:", user);
     // Save user to the database
     await user.save();
 
@@ -181,15 +186,13 @@ export const login = async (req, res) => {
 
     console.log(user);
     const { password, role, appointments, ...rest } = user._doc;
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Login successful",
-        token,
-        data: { ...rest, role },
-        role,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      token,
+      data: { ...rest, role },
+      role,
+    });
   } catch (err) {
     console.error(err); // Log any errors
     res.status(500).json({ success: false, message: "Failed to login" }); // Handle errors gracefully

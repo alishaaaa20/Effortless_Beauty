@@ -71,7 +71,7 @@ const ArtistProfile = () => {
                       </figure>
                       <div>
                         <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-4 lg:py-2 lg:px-6 rounded text-md leading-4 lg:text-lg lg:leading-6 font-semibols">
-                          {data.specialization}
+                          {data.location}
                         </span>
 
                         <h3 className="text-[22px] leading-9 font-bold text-headingColor mt-3">
@@ -86,6 +86,9 @@ const ArtistProfile = () => {
                             ({data.totalReviews ? data.totalReviews : 0})
                           </span>
                         </div>
+                        <p className="text-[18px] mt-5 leading-6 font-[500] text-textColor mt-2">
+                          {data.specialization}
+                        </p>
                         <p className="text__para font-[15px] lg:max-w-[400px] leading-6">
                           {data?.bio ? data.bio : "No bio available"}
                         </p>

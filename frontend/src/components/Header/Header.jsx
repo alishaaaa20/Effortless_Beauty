@@ -112,7 +112,7 @@ const Header = () => {
                   <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
                     <img
                       src={user?.photo}
-                      className="w-full rounded-full"
+                      className="w-full h-full rounded-full"
                       alt=""
                     />
                   </figure>

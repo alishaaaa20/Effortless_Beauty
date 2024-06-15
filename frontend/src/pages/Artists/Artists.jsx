@@ -15,10 +15,8 @@ const Artists = () => {
     try {
       let endpoint = `${BASE_URL}/artists/search/getAllArtist`;
 
-      if (/[a-zA-Z]/.test(searchInput)) {
-        endpoint += `?name=${searchInput}`;
-      } else {
-        endpoint += `?specialization=${searchInput}`;
+      if (searchInput) {
+        endpoint += `?query=${searchInput}`;
       }
 
       const response = await fetch(endpoint);
@@ -26,8 +24,8 @@ const Artists = () => {
       if (response.ok) {
         const data = await response.json();
 
-        if (Array.isArray(data)) {
-          setFilteredArtists(data);
+        if (data.success && Array.isArray(data.data)) {
+          setFilteredArtists(data.data);
         } else {
           setFilteredArtists([]);
         }
@@ -46,8 +44,33 @@ const Artists = () => {
   };
 
   useEffect(() => {
-    // Initialize filteredArtists as an empty array
-    setFilteredArtists([]);
+    // Fetch all approved artists on initial load
+    const fetchArtists = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/artists/search/getAllArtist`);
+
+        if (response.ok) {
+          const data = await response.json();
+
+          if (data.success && Array.isArray(data.data)) {
+            setFilteredArtists(data.data);
+          } else {
+            setFilteredArtists([]);
+          }
+        } else {
+          console.error(
+            "Error fetching artist data - HTTP Error:",
+            response.status
+          );
+          setFilteredArtists([]);
+        }
+      } catch (error) {
+        console.error("Error fetching artist data:", error);
+        setFilteredArtists([]);
+      }
+    };
+
+    fetchArtists();
   }, []);
 
   return (

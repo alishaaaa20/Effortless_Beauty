@@ -50,6 +50,17 @@ export default function Profile({ artistData }) {
     setFormData({ ...formData, photo: data?.url });
   };
 
+  const handleQualificationFileChange = async (e, index) => {
+    const file = e.target.files[0];
+    const data = await uploadImageToCloudinary(file);
+
+    setFormData((prevFormData) => {
+      const updatedQualifications = [...prevFormData.qualifications];
+      updatedQualifications[index].photo = data?.url;
+      return { ...prevFormData, qualifications: updatedQualifications };
+    });
+  };
+
   const updateProfileHandler = async (e) => {
     e.preventDefault();
 
@@ -256,12 +267,13 @@ export default function Profile({ artistData }) {
                 placeholder="Enter your service price"
                 className="form__input"
                 value={formData.ticketPrice}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    ticketPrice: parseFloat(e.target.value) || 0,
-                  })
-                } // Manually convert to number
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    ticketPrice: value < 0 ? 0 : value,
+                  }));
+                }}
               />
             </div>
           </div>
@@ -277,9 +289,8 @@ export default function Profile({ artistData }) {
                     <input
                       type="date"
                       name="startingDate"
-                      placeholder="Starting Date"
-                      className="form__input"
                       value={item.startingDate}
+                      className="form__input"
                       onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
@@ -288,14 +299,13 @@ export default function Profile({ artistData }) {
                     <input
                       type="date"
                       name="endingDate"
-                      placeholder="Ending Date"
-                      className="form__input"
                       value={item.endingDate}
+                      className="form__input"
                       onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-5 mt-5">
+                <div className="grid grid-cols-2 gap-5 mb-[30px]">
                   <div>
                     <p className="form__label">Degree*</p>
                     <input
@@ -319,44 +329,34 @@ export default function Profile({ artistData }) {
                     />
                   </div>
                 </div>
-                <div className="mt-5 flex items-center gap-3">
-                  <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
+                <div className="mb-5">
+                  <p className="form__label">Upload Certificate Photo*</p>
+                  <input
+                    type="file"
+                    name="photo"
+                    className="form__input"
+                    onChange={(e) => handleQualificationFileChange(e, index)}
+                  />
+                  {item.photo && (
                     <img
                       src={item.photo}
-                      alt=""
-                      className="w-full rounded-full"
+                      alt="Qualification Certificate"
+                      className="mt-2 h-24 w-24 object-cover"
                     />
-                  </figure>
-
-                  <div className="relative w-[130px] h-[50px]">
-                    <input
-                      type="file"
-                      name="photo"
-                      id="customFile"
-                      className="absolute w-full h-full opacity-0 top-0 left-0 cursor-pointer"
-                      onChange={(e) => handleQualificationChange(e, index)}
-                      accept=".jpg, .jpeg, .png"
-                    />
-                    <label
-                      htmlFor="customFile"
-                      className="absolute top-0 left-0 w-ful h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
-                    >
-                      Upload Certificate Photo
-                    </label>
-                  </div>
+                  )}
                 </div>
                 <button
+                  className="bg-red-500 text-white px-4 py-2 mb-3 rounded"
                   onClick={(e) => deleteQualification(e, index)}
-                  className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px] cursor-pointer"
                 >
-                  <AiOutlineDelete />
+                  Delete
                 </button>
               </div>
             </div>
           ))}
           <button
+            className="bg-primaryColor text-white px-4 py-2 rounded"
             onClick={addQualification}
-            className="bg-black py-2 px-5 rounded  h-fit text-white cursor-pointer"
           >
             Add Qualification
           </button>
@@ -372,9 +372,8 @@ export default function Profile({ artistData }) {
                     <input
                       type="date"
                       name="startingDate"
-                      placeholder="Starting Date"
-                      className="form__input"
                       value={item.startingDate}
+                      className="form__input"
                       onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
@@ -383,14 +382,13 @@ export default function Profile({ artistData }) {
                     <input
                       type="date"
                       name="endingDate"
-                      placeholder="Ending Date"
-                      className="form__input"
                       value={item.endingDate}
+                      className="form__input"
                       onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-5 mt-5">
+                <div className="grid grid-cols-2 gap-5 mb-[30px]">
                   <div>
                     <p className="form__label">Position*</p>
                     <input
@@ -415,17 +413,17 @@ export default function Profile({ artistData }) {
                   </div>
                 </div>
                 <button
+                  className="bg-red-500 text-white px-4 py-2 mb-3 rounded"
                   onClick={(e) => deleteExperience(e, index)}
-                  className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px] cursor-pointer"
                 >
-                  <AiOutlineDelete />
+                  Delete
                 </button>
               </div>
             </div>
           ))}
           <button
+            className="bg-primaryColor text-white px-4 py-2 rounded"
             onClick={addExperience}
-            className="bg-black py-2 px-5 rounded  h-fit text-white cursor-pointer"
           >
             Add Experience
           </button>
@@ -435,64 +433,54 @@ export default function Profile({ artistData }) {
           {formData.timeSlots?.map((item, index) => (
             <div key={index}>
               <div>
-                <div className="grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5 ">
+                <div className="grid grid-cols-2 gap-5 ">
                   <div>
                     <p className="form__label">Day*</p>
-                    <select
+                    <input
+                      type="text"
                       name="day"
                       value={item.day}
+                      className="form__input"
                       onChange={(e) => handleTimeSlotChange(e, index)}
-                      className="form__input py-3.5 px-4 w-full border bg-white border-primaryColor rounded-md focus:outline-none focus:ring-2 focus:ring-primaryColor focus:border-transparent"
-                    >
-                      <option value="">Select</option>
-                      <option value="monday">Monday</option>
-                      <option value="tuesday">Tuesday</option>
-                      <option value="wednesday">Wednesday</option>
-                      <option value="thursday">Thursday</option>
-                      <option value="friday">Friday</option>
-                      <option value="saturday">Saturday</option>
-                      <option value="sunday">Sunday</option>
-                    </select>
+                    />
                   </div>
                   <div>
                     <p className="form__label">Starting Time*</p>
                     <input
                       type="time"
                       name="startingTime"
-                      placeholder="Ending Date"
-                      className="form__input"
                       value={item.startingTime}
+                      className="form__input"
                       onChange={(e) => handleTimeSlotChange(e, index)}
                     />
                   </div>
+                </div>
+                <div className="grid grid-cols-2 gap-5 mb-[30px]">
                   <div>
                     <p className="form__label">Ending Time*</p>
                     <input
                       type="time"
                       name="endingTime"
-                      placeholder="Ending Date"
-                      className="form__input"
                       value={item.endingTime}
+                      className="form__input"
                       onChange={(e) => handleTimeSlotChange(e, index)}
                     />
                   </div>
-                  <div className="flex items-center">
-                    <button
-                      onClick={(e) => deleteTimeSlot(e, index)}
-                      className="bg-red-600 p-2 rounded-full text-white text-[18px]   cursor-pointer mt-8"
-                    >
-                      <AiOutlineDelete />
-                    </button>
-                  </div>
                 </div>
+                <button
+                  className="bg-red-500 text-white px-4 py-2 mb-3 rounded"
+                  onClick={(e) => deleteTimeSlot(e, index)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
           <button
+            className="bg-primaryColor text-white px-4 py-2 rounded"
             onClick={addTimeSlot}
-            className="bg-black py-2 px-5 rounded  h-fit text-white cursor-pointer"
           >
-            Add Timeslot
+            Add Time Slot
           </button>
         </div>
         <div className="mt-5">
@@ -506,42 +494,30 @@ export default function Profile({ artistData }) {
             rows={5}
           />
         </div>
-        <div className="mt-5 flex items-center gap-3">
+
+        <div className="mt-5">
+          <p className="form__label">Upload Profile Photo*</p>
+          <input
+            type="file"
+            name="photo"
+            className="form__input"
+            onChange={handleFileInputChange}
+          />
           {formData.photo && (
-            <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
-              <img
-                src={formData.photo}
-                alt=""
-                className="w-full rounded-full"
-              />
-            </figure>
-          )}
-          <div className="relative w-[130px] h-[50px]">
-            <input
-              type="file"
-              name="photo"
-              id="customFile"
-              className="absolute w-full h-full opacity-0 top-0 left-0 cursor-pointer"
-              onChange={handleFileInputChange}
-              accept=".jpg, .jpeg, .png"
+            <img
+              src={formData.photo}
+              alt="Profile"
+              className="mt-2 h-24 w-24 object-cover"
             />
-            <label
-              htmlFor="customFile"
-              className="absolute top-0 left-0 w-ful h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
-            >
-              Upload Photo
-            </label>
-          </div>
+          )}
         </div>
-        <div className="mt-9">
-          <button
-            type="submit"
-            onClick={updateProfileHandler}
-            className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
-          >
-            Update Profile
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="bg-primaryColor text-white px-4 py-2 mt-5 rounded"
+          onClick={updateProfileHandler}
+        >
+          Save
+        </button>
       </form>
     </div>
   );

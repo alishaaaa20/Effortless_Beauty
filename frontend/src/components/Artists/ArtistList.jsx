@@ -7,16 +7,24 @@ import { useMemo } from "react";
 const ArtistList = ({ query = "" }) => {
   const { data: artists, loading, error } = useFetch(`${BASE_URL}/artists`);
 
-  // filter artists based on query using usememo
-  // filter based on name and specialization
+  // filter artists based on query using useMemo
+  // filter based on name, specialization, and location
   const filteredArtists = useMemo(() => {
     if (!query || !query.length) return artists;
 
-    return artists.filter(
-      (artist) =>
-        artist.name.toLowerCase().includes(query.toLowerCase()) ||
-        artist.specialization.toLowerCase().includes(query.toLowerCase())
-    );
+    return artists.filter((artist) => {
+      const nameMatches = artist.name
+        ?.toLowerCase()
+        .includes(query.toLowerCase());
+      const specializationMatches = artist.specialization
+        ?.toLowerCase()
+        .includes(query.toLowerCase());
+      const locationMatches = artist.location
+        ?.toLowerCase()
+        .includes(query.toLowerCase());
+
+      return nameMatches || specializationMatches || locationMatches;
+    });
   }, [query, artists]);
 
   console.log(filteredArtists);

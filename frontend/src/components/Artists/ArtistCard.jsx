@@ -29,7 +29,7 @@ const ArtistCard = ({ artist }) => {
 
       <div className="mt-2 lg:mt-4 flex items-center justify-between">
         <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded">
-          {specialization}
+          {location}
         </span>
 
         <div className="flex items-center gap-[6px]">
@@ -47,6 +47,9 @@ const ArtistCard = ({ artist }) => {
           {/* <h3 className="text-[16px] leading-7 lg:text-[18px] lg:leading-[30px] font-semibold text-headingColor">
             +{totalCustomers || 0} Customers
           </h3> */}
+          <p className="text-[14px] mb-5  leading-6 lg:text-[16px] lg:leading-7 font-[500] text-textColor">
+            {specialization}
+          </p>
 
           <p className="text-[16px] leading-6 font-[500] text-textColor">
             At {experiences && experiences[0]?.company}

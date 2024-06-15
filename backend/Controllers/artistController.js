@@ -57,20 +57,23 @@ export const getAllArtist = async (req, res) => {
     const { query } = req.query;
     let artists;
 
+    const filter = { isApproved: "approved" }; // Only approved artists
+
     if (query) {
       artists = await Artist.find({
+        ...filter,
         $or: [
           { name: { $regex: query, $options: "i" } },
           { specialization: { $regex: query, $options: "i" } },
         ],
       }).select("-password");
     } else {
-      artists = await Artist.find().select("-password");
+      artists = await Artist.find(filter).select("-password");
     }
 
     res
       .status(200)
-      .json({ success: true, message: "Users found", data: artists });
+      .json({ success: true, message: "Artists found", data: artists });
   } catch (err) {
     res.status(500).json({ success: false, message: "Not found" });
   }

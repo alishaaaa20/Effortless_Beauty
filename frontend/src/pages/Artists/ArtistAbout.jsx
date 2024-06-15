@@ -32,6 +32,13 @@ const ArtistAbout = ({ name, about, qualifications, experiences }) => {
               <p className="text-base leading-6 font-medium text-textColor">
                 {item.institution}
               </p>
+              {item.photo && ( // Check if item.photo exists
+                <img
+                  src={item.photo} // Use item.photo as src for the image
+                  alt={`Qualification Certificate ${index + 1}`} // Provide a meaningful alt text
+                  className="mt-2 h-24 w-24 object-cover"
+                />
+              )}
             </li>
           ))}
         </ul>

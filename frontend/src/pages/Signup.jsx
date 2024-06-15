@@ -12,6 +12,7 @@ const Signup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewURL, setpreviewURL] = useState("");
   const [loading, setLoading] = useState(false);
+  const [photoLoading, setPhotoLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,6 +20,8 @@ const Signup = () => {
     photo: selectedFile,
     gender: "male",
     role: "customer",
+    phone: "",
+    location: "",
   });
 
   const { dispatch } = useContext(AuthContext);
@@ -30,14 +33,18 @@ const Signup = () => {
 
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
+    setPhotoLoading(true);
 
-    const data = await uploadImageToCloudinary(file);
-
-    setpreviewURL(data.url);
-    setSelectedFile(data.url);
-    setFormData({ ...formData, photo: data.url });
-
-    console.log(file);
+    try {
+      const data = await uploadImageToCloudinary(file);
+      setpreviewURL(data.url);
+      setSelectedFile(data.url);
+      setFormData({ ...formData, photo: data.url });
+    } catch (error) {
+      toast.error("Failed to upload image.");
+    } finally {
+      setPhotoLoading(false);
+    }
   };
 
   const submitHandler = async (event) => {
@@ -121,7 +128,7 @@ const Signup = () => {
                   required
                 />
               </div>
-              {/* <div className="mb-5">
+              <div className="mb-5">
                 <input
                   type="number"
                   placeholder="Phone Number"
@@ -133,14 +140,14 @@ const Signup = () => {
               </div>
               <div className="mb-5">
                 <input
-                  type="location"
+                  type="text"
                   placeholder="Location"
                   name="location"
                   value={formData.location}
                   onChange={handleInputChange}
                   className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
                 />
-              </div> */}
+              </div>
               <div className="mb-5 flex items-center justify-between">
                 <label className="text-headingColor font-bold text-[16px] leading-7">
                   Are you a:
@@ -152,7 +159,6 @@ const Signup = () => {
                   >
                     <option value="artist">Makeup Artist</option>
                     <option value="customer">Customer</option>
-                    required
                   </select>
                 </label>
 
@@ -196,9 +202,13 @@ const Signup = () => {
 
                   <label
                     htmlFor="customFile"
-                    className="absolute top-0 left-0 w-ful h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
+                    className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
                   >
-                    Upload Photo
+                    {photoLoading ? (
+                      <HashLoader size={20} color="#35727B" />
+                    ) : (
+                      "Upload Photo"
+                    )}
                   </label>
                 </div>
               </div>
