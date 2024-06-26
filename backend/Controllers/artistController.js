@@ -48,7 +48,7 @@ export const getSingleArtist = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Artist found", data: artist });
   } catch (err) {
-    res.status(500).json({ success: false, message: "No user found" });
+    res.status(500).json({ success: false, message: "No artist found" });
   }
 };
 
@@ -57,7 +57,7 @@ export const getAllArtist = async (req, res) => {
     const { query } = req.query;
     let artists;
 
-    const filter = { isApproved: "approved" }; // Only approved artists
+    const filter = { isApproved: "approved" };
 
     if (query) {
       artists = await Artist.find({
@@ -118,5 +118,65 @@ export const getArtistProfile = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ success: false, message: "Not found" });
+  }
+};
+
+export const getTotalArtist = async (req, res) => {
+  try {
+    const totalArtists = await Artist.countDocuments();
+
+    console.log(totalArtists, "totalArtists");
+    res.status(200).json({
+      success: true,
+      message: "Total Artists",
+      data: totalArtists,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to get total" });
+  }
+};
+
+export const getAllArtists = async (req, res) => {
+  try {
+    const artists = await Artist.find({}).select("-password");
+
+    res
+      .status(200)
+      .json({ success: true, message: "Artists found", data: artists });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Not found" });
+  }
+};
+
+export const updateArtistStatus = async (req, res) => {
+  const id = req.params.id;
+  const { status } = req.body;
+
+  if (!["pending", "approved", "cancelled"].includes(status)) {
+    return res.status(400).json({ success: false, message: "Invalid status" });
+  }
+
+  try {
+    const updatedArtist = await Artist.findByIdAndUpdate(
+      id,
+      { isApproved: status },
+      { new: true }
+    );
+
+    if (!updatedArtist) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Artist not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Artist status updated to ${status}`,
+      data: updatedArtist,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update status" });
   }
 };

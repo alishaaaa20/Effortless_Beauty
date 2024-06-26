@@ -40,7 +40,7 @@ export const getSingleUser = async (req, res) => {
 
     res.status(200).json({ success: true, message: "User found", data: user });
   } catch (err) {
-    res.status(500).json({ success: false, message: "No user found" });
+    res.status(500).json({ success: false, message: "Not found" });
   }
 };
 
@@ -93,5 +93,17 @@ export const getMyAppointments = async (req, res) => {
       .json({ success: true, message: "Appointments found", data: artists });
   } catch (err) {
     res.status(500).json({ success: false, message: "Not found" });
+  }
+};
+
+export const getTotalUser = async (req, res) => {
+  try {
+    const total = await User.countDocuments();
+    console.log(total, "total");
+    res
+      .status(200)
+      .json({ success: true, message: "Total Users", data: total });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Not found okkkk" });
   }
 };
