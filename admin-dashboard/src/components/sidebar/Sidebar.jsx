@@ -47,7 +47,7 @@ const Sidebar = () => {
           <img
             src={theme === LIGHT_THEME ? LogoBlue : LogoWhite}
             alt=""
-            className="w-10 h-10"
+            height={50}
             width={200}
           />
         </div>

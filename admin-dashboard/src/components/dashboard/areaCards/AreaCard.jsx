@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
-import { PieChart, Pie, Cell, Tooltip } from "recharts";
 
-const AreaCard = ({ colors, cardInfo }) => {
+const AreaCard = ({ cardInfo }) => {
   return (
     <div className="area-card">
       <div className="area-card-info">
