@@ -180,3 +180,260 @@ export const updateArtistStatus = async (req, res) => {
       .json({ success: false, message: "Failed to update status" });
   }
 };
+
+export const getArtistByLocation = async (req, res) => {
+  const { location } = req.query;
+
+  try {
+    const artists = await Artist.find({ location }).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getArtistBySpecialization = async (req, res) => {
+  const { specialization } = req.query;
+
+  try {
+    const artists = await Artist.find({ specialization }).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getArtistByLocationAndSpecialization = async (req, res) => {
+  const { location, specialization } = req.query;
+
+  try {
+    const artists = await Artist.find({ location, specialization }).select(
+      "-password"
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getArtistByLocationAndSpecializationAndName = async (req, res) => {
+  const { location, specialization, name } = req.query;
+
+  try {
+    const artists = await Artist.find({
+      location,
+      specialization,
+      name: { $regex: name, $options: "i" },
+    }).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getArtistByLocationAndName = async (req, res) => {
+  const { location, name } = req.query;
+
+  try {
+    const artists = await Artist.find({
+      location,
+      name: { $regex: name, $options: "i" },
+    }).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getArtistBySpecializationAndName = async (req, res) => {
+  const { specialization, name } = req.query;
+
+  try {
+    const artists = await Artist.find({
+      specialization,
+      name: { $regex: name, $options: "i" },
+    }).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getArtistByRating = async (req, res) => {
+  const { rating } = req.query;
+
+  try {
+    const artists = await Artist.find({ rating }).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getArtistByPrice = async (req, res) => {
+  const { price } = req.query;
+
+  try {
+    const artists = await Artist.find({ price }).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getApprovedArtists = async (req, res) => {
+  try {
+    const artists = await Artist.find({ isApproved: "approved" }).select(
+      "-password"
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getPendingArtists = async (req, res) => {
+  try {
+    const artists = await Artist.find({ isApproved: "pending" }).select(
+      "-password"
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const getCancelledArtists = async (req, res) => {
+  try {
+    const artists = await Artist.find({ isApproved: "cancelled" }).select(
+      "-password"
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Artists found",
+      data: artists,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get artists",
+    });
+  }
+};
+
+export const countArtistsByStatus = async (req, res) => {
+  try {
+    const statusCounts = await Artist.aggregate([
+      {
+        $group: {
+          _id: "$isApproved",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const totalArtists = await Artist.countDocuments();
+
+    const counts = {
+      approved: 0,
+      pending: 0,
+      cancelled: 0,
+      total: totalArtists,
+    };
+
+    statusCounts.forEach((statusCount) => {
+      counts[statusCount._id] = statusCount.count;
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Artist counts by status",
+      data: counts,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to get artist counts" });
+  }
+};
