@@ -4,26 +4,31 @@ import Artist from "../models/ArtistSchema.js";
 // Get all reviews
 export const getAllReviews = async (req, res) => {
   try {
-    const reviews = await Review.find()
-      .populate("user", "name photo")
-      .populate("artist", "name");
+    const reviews = await Review.find().populate("user").populate("artist");
     res
       .status(200)
       .json({ success: true, message: "Successful", data: reviews });
   } catch (err) {
-    // Include the error parameter to properly handle errors
     res.status(404).json({ success: false, message: "Not found", error: err });
   }
 };
 
 // Create review
 export const createReview = async (req, res) => {
-  if (!req.body.artist) req.body.artist = req.params.artistId;
-  if (!req.body.user) req.body.user = req.params.userId;
+  const { artist, reviewText, rating, photos } = req.body;
 
-  const newReview = new Review(req.body);
+  if (!artist) req.body.artist = req.params.artistId;
+  req.body.user = req.userId;
 
   try {
+    const newReview = new Review({
+      artist,
+      user: req.body.user,
+      reviewText,
+      rating,
+      photos,
+    });
+
     const savedReview = await newReview.save();
 
     await Artist.findByIdAndUpdate(req.body.artist, {
@@ -34,6 +39,8 @@ export const createReview = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Review submitted", data: savedReview });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: err.message });
   }
 };

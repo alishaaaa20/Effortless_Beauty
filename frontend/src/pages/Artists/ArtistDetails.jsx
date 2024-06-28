@@ -47,7 +47,11 @@ const ArtistDetails = () => {
             <div className="md:col-span-2">
               <div className="flex items-center gap-5">
                 <figure className="max-w-[200px] max-h-[200px]">
-                  <img src={photo} alt="Artist" className="w-full" />
+                  <img
+                    src={photo}
+                    alt="Artist"
+                    className="w-[250px] h-[250px] object-cover rounded-lg"
+                  />
                 </figure>
 
                 <div>

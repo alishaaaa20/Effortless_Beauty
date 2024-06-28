@@ -79,7 +79,7 @@
           &.dot-pending {
             background-color: var(--orange-color);
           }
-          &.dot-canceled {
+          &.dot-cancelled {
             background-color: var(--red-color);
           }
           &.dot-delivered {
@@ -105,7 +105,7 @@
     right: 50%;
     transform: translateX(50%);
     height: auto;
-    min-width: 80px;
+    min-width: 200px;
     box-shadow: rgba(100, 100, 111, 0.1) 0px 1px 4px 0px;
     background-color: var(--secondary-color);
     padding: 6px 10px;

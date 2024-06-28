@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
 import Artist from "./ArtistSchema.js";
+import User from "./UserSchema.js";
 
 const reviewSchema = new mongoose.Schema(
   {
     artist: {
       type: mongoose.Types.ObjectId,
-      ref: "Makeup Artist",
+      ref: Artist.modelName,
+      required: true,
     },
     user: {
       type: mongoose.Types.ObjectId,
-      ref: "User",
+      ref: User.modelName,
+      required: true,
     },
     reviewText: {
       type: String,
@@ -21,6 +24,9 @@ const reviewSchema = new mongoose.Schema(
       min: 0,
       max: 5,
       default: 0,
+    },
+    photos: {
+      type: [String], // Array of URLs to the photos
     },
   },
   { timestamps: true }
@@ -36,8 +42,6 @@ reviewSchema.pre(/^find/, function (next) {
 });
 
 reviewSchema.statics.calcAverageRatings = async function (artistId) {
-  // this points to current review
-
   const stats = await this.aggregate([
     {
       $match: { artist: artistId },

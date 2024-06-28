@@ -6,6 +6,9 @@ import { formateDate } from "../../utils/formateDate";
 
 const Feedback = ({ reviews, totalRating }) => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+  const openImage = (src) => {
+    window.open(src, "_blank");
+  };
 
   useEffect(() => {
     console.log("Reviews:", reviews);
@@ -26,30 +29,47 @@ const Feedback = ({ reviews, totalRating }) => {
           </div>
         ) : (
           reviews?.map((review, index) => (
-            <div key={index} className="flex justify-between gap-10 mb-[30px]">
-              <div className="flex gap-3">
-                <figure className="w-10 h-10 rounded-full">
-                  <img
-                    className="w-full"
-                    src={review?.user?.photo || avatar}
-                    alt="User"
-                  />
-                </figure>
-                <div>
-                  <h5 className="text-[16px] leading-6 text-primaryColor font-bold">
-                    {review?.user?.name}
-                  </h5>
-                  <p className="text-[14px] leading-6 text-textColor">
-                    {formateDate(review?.createdAt)}
-                  </p>
-                  <p className="text__para mt-3 font-medium text-[15px]">
-                    {review.reviewText}
-                  </p>
+            <div key={index} className="flex flex-col gap-4 mb-[30px]">
+              <div className="flex justify-between gap-10">
+                <div className="flex gap-3">
+                  <figure className="w-10 h-10 rounded-full">
+                    <img
+                      className="w-full"
+                      src={review?.user?.photo || avatar}
+                      alt="User"
+                    />
+                  </figure>
+                  <div>
+                    <h5 className="text-[16px] leading-6 text-primaryColor font-bold">
+                      {review?.user?.name}
+                    </h5>
+                    <p className="text-[14px] leading-6 text-textColor">
+                      {formateDate(review?.createdAt)}
+                    </p>
+                    <p className="text__para mt-3 font-medium text-[15px]">
+                      {review.reviewText}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-1">
+                  {[...Array(review?.rating).keys()].map((_, index) => (
+                    <AiFillStar key={index} color="#F6BE00" />
+                  ))}
                 </div>
               </div>
-              <div className="flex gap-1">
-                {[...Array(review?.rating).keys()].map((_, index) => (
-                  <AiFillStar key={index} color="#F6BE00" />
+              <div className="flex gap-3 flex-wrap">
+                {review?.photos?.map((photo, index) => (
+                  <figure
+                    key={index}
+                    className="w-[200px]  rounded border-2 border-solid border-primaryColor flex items-center justify-center"
+                  >
+                    <img
+                      src={photo}
+                      alt={`Review ${index + 1}`}
+                      className="w-[200px] h-[150px] rounded object-cover"
+                      onClick={() => openImage(photo)}
+                    />
+                  </figure>
                 ))}
               </div>
             </div>

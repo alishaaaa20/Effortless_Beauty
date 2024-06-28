@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TableAction from "./tableAction";
 import "./table.scss";
+import { LuFilter } from "react-icons/lu";
 
 const TABLE_HEADS = [
   "Artist Name",
@@ -15,6 +16,8 @@ const TABLE_HEADS = [
 
 const AreaTable = () => {
   const [artists, setArtists] = useState([]);
+  const [filteredArtists, setFilteredArtists] = useState([]);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     const fetchArtists = async () => {
@@ -23,6 +26,7 @@ const AreaTable = () => {
           "http://localhost:5000/api/v1/artists/all"
         );
         setArtists(response.data.data);
+        setFilteredArtists(response.data.data);
       } catch (error) {
         console.error("Error fetching artists:", error);
       }
@@ -30,6 +34,16 @@ const AreaTable = () => {
 
     fetchArtists();
   }, []);
+
+  useEffect(() => {
+    if (filter === "all") {
+      setFilteredArtists(artists);
+    } else {
+      setFilteredArtists(
+        artists.filter((artist) => artist.isApproved === filter)
+      );
+    }
+  }, [filter, artists]);
 
   const handleStatusChange = async (artistId, newStatus) => {
     try {
@@ -52,6 +66,28 @@ const AreaTable = () => {
   return (
     <section className="content-area-table">
       <div className="data-table-diagram">
+        <div className="mb-6 text-xl  flex items-center">
+          <div className="flex mr-2 ">
+            <label htmlFor="status-filter " className="text-lg">
+              Filter Artists By:{" "}
+            </label>
+            <span className="mt-2 ml-2">
+              {" "}
+              <LuFilter strokeWidth={2} />
+            </span>
+          </div>
+          <select
+            id="status-filter"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="mt-2 p-2 border bg-primaryColor rounded-md w-60 text-white text-base"
+          >
+            <option value="all">All Makeup Artists</option>
+            <option value="pending">Pending Makeup Artists</option>
+            <option value="approved">Approved Makeup Artists</option>
+            <option value="cancelled">Cancelled Makeup Artists</option>
+          </select>
+        </div>
         <table>
           <thead>
             <tr>
@@ -61,7 +97,7 @@ const AreaTable = () => {
             </tr>
           </thead>
           <tbody>
-            {artists.map((artist) => (
+            {filteredArtists.map((artist) => (
               <tr key={artist._id}>
                 <td>{artist.name}</td>
                 <td>{artist.location}</td>

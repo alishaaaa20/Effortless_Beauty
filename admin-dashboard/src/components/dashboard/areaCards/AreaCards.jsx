@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import AreaCard from "./AreaCard";
 import "./AreaCards.scss";
+import {
+  FaUserPlus,
+  FaUserLargeSlash,
+  FaUserCheck,
+  FaUserClock,
+} from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const AreaCards = () => {
   const [artistCounts, setArtistCounts] = useState({
@@ -54,42 +61,74 @@ const AreaCards = () => {
   }, []);
 
   return (
-    <section className="content-area-cards">
-      <AreaCard
-        cardInfo={{
-          title: "Total Artists",
-          value: artistCounts.total.toString(),
-          text: `We have ${artistCounts.total} artists.`,
-        }}
-      />
-      <AreaCard
-        cardInfo={{
-          title: "Approved Artists",
-          value: artistCounts.approved.toString(),
-          text: `We have ${artistCounts.approved} approved artists.`,
-        }}
-      />
-      <AreaCard
-        cardInfo={{
-          title: "Pending Artists",
-          value: artistCounts.pending.toString(),
-          text: `We have ${artistCounts.pending} pending artists.`,
-        }}
-      />
-      <AreaCard
-        cardInfo={{
-          title: "Cancelled Artists",
-          value: artistCounts.cancelled.toString(),
-          text: `We have ${artistCounts.cancelled} cancelled artists.`,
-        }}
-      />
-      <AreaCard
-        cardInfo={{
-          title: "Total Customers",
-          value: totalCustomers.toString(),
-          text: `We have ${totalCustomers}  customers.`,
-        }}
-      />
+    <section className="">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <Link to="/artists">
+          <div className="rounded-lg bg-white border-l-4 border-primaryColor p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-out">
+            <div>
+              <h2 className="text-primaryColor text-lg font-bold mb-2">
+                Total Artists
+              </h2>
+              <h1 className="text-2xl font-bold text-gray-600">
+                {artistCounts.total}
+              </h1>
+            </div>
+            <FaUserPlus size={32} className="text-primaryColor" />
+          </div>
+        </Link>
+        <Link to="/artists">
+          <div className="rounded-lg bg-white border-l-4 border-green-600 p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-out">
+            <div>
+              <h2 className="text-green-600 text-lg font-bold mb-2">
+                Approved Artists
+              </h2>
+              <h1 className="text-2xl font-bold text-gray-600">
+                {artistCounts.approved}
+              </h1>
+            </div>
+            <FaUserCheck size={32} className="text-green-600" />
+          </div>
+        </Link>
+        <Link to="/artists">
+          <div className="rounded-lg bg-white border-l-4 border-yellow-400 p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-out">
+            <div>
+              <h2 className="text-yellow-400 text-lg font-bold mb-2">
+                Pending Artists
+              </h2>
+              <h1 className="text-2xl font-bold text-gray-600">
+                {artistCounts.pending}
+              </h1>
+            </div>
+            <FaUserClock size={32} className="text-yellow-400" />
+          </div>
+        </Link>
+        <Link to="/artists">
+          <div className="rounded-lg bg-white border-l-4 border-red-600 p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-out">
+            <div>
+              <h2 className="text-red-600 text-lg font-bold mb-2">
+                Rejected Artists
+              </h2>
+              <h1 className="text-2xl font-bold text-gray-600">
+                {artistCounts.cancelled}
+              </h1>
+            </div>
+            <FaUserLargeSlash size={32} className="text-red-600" />
+          </div>
+        </Link>
+        <Link to="/customers">
+          <div className="rounded-lg bg-white border-l-4 border-black p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition duration-300 ease-out">
+            <div>
+              <h2 className="text-black text-lg font-bold mb-2">
+                Total Customers
+              </h2>
+              <h1 className="text-2xl font-bold text-gray-600">
+                {totalCustomers}
+              </h1>
+            </div>
+            <FaUserPlus size={32} className="text-black" />
+          </div>
+        </Link>
+      </div>
     </section>
   );
 };

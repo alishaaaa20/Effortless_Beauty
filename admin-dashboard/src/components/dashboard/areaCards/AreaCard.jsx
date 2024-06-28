@@ -2,35 +2,14 @@ import PropTypes from "prop-types";
 
 const AreaCard = ({ cardInfo }) => {
   return (
-    <div className="area-card">
-      <div className="area-card-info">
+    <div className="container w-[200px] p-2 bg-white shadow-lg">
+      <div className="">
         <h5 className="info-title">{cardInfo.title}</h5>
-        <div className="info-value">{cardInfo.value}</div>
+        <div className="flex justify-between ">
+          <div className="info-value">{cardInfo.value}</div>
+          <div className="info-icon">{cardInfo.icon}</div>
+        </div>
         <p className="info-text">{cardInfo.text}</p>
-      </div>
-      <div className="area-card-chart">
-        {/* <PieChart width={100} height={100}>
-          <Pie
-            data={data}
-            cx={50}
-            cy={45}
-            innerRadius={20}
-            fill="#e4e8ef"
-            paddingAngle={0}
-            dataKey="value"
-            startAngle={-270}
-            endAngle={150}
-            stroke="none"
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={colors[index % colors.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip formatter={renderTooltipContent} />
-        </PieChart> */}
       </div>
     </div>
   );

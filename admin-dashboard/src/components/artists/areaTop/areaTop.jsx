@@ -48,7 +48,9 @@ const AreaTop = () => {
         >
           <MdOutlineMenu size={24} />
         </button>
-        <h2 className="area-top-title">Registered Makeup Artists</h2>
+        <h2 className="area-top-title text-2xl font-bold ">
+          Registered Makeup Artists
+        </h2>
       </div>
       {/* <div className="area-top-r">
         <div

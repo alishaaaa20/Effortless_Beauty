@@ -18,9 +18,13 @@ const ArtistCard = ({ artist }) => {
   } = artist;
 
   return (
-    <div className="p-3 lg:p-5">
+    <div className="p-4   w-[350px]  border-primaryColor ">
       <div>
-        <img src={photo} className="w-[200px] h-[200px]" alt={name} />
+        <img
+          src={photo}
+          className="w-[200px] h-[200px] object-cover rounded"
+          alt={name}
+        />
       </div>
 
       <h2 className="text-[18px] leading-[30px] lg:text-[26px] lg:leading-9 text-headingColor font-[700] mt-3 lg:mt-5">
@@ -58,7 +62,7 @@ const ArtistCard = ({ artist }) => {
 
         <Link
           to={`/artists/${_id}`}
-          className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+          className="w-[44px] h-[44px] rounded-full border border-solid bg-primaryColor text-white   flex items-center justify-center group hover:bg-primaryColor hover:border-none"
         >
           <BsArrowRight className="group-hover:text-white w-6 h-5" />
         </Link>
