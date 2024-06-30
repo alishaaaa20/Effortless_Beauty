@@ -9,6 +9,7 @@ import useFetch from "../../hooks/useFetch";
 import Loader from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
 import { useParams } from "react-router-dom";
+import Gallery from "./Gallery";
 
 const ArtistDetails = () => {
   const [tab, setTab] = useState("about");
@@ -35,7 +36,13 @@ const ArtistDetails = () => {
     specialization,
     ticketPrice,
     location,
+    gallaryPhotos,
   } = artist;
+
+  // Format the average rating to one decimal place
+  const formattedAverageRating = averageRating
+    ? averageRating.toFixed(1)
+    : "N/A";
 
   return (
     <section>
@@ -64,7 +71,7 @@ const ArtistDetails = () => {
 
                   <div className="flex items-center gap-[6px] mt-4">
                     <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
-                      <img src={starIcon} alt="" /> {averageRating}
+                      <img src={starIcon} alt="" /> {formattedAverageRating}
                     </span>
                     <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
                       ({totalRating})
@@ -99,6 +106,15 @@ const ArtistDetails = () => {
                 >
                   Feedback
                 </button>
+                <button
+                  onClick={() => setTab("gallery")}
+                  className={`${
+                    tab === "gallery" &&
+                    "border-b border-solid border-primaryColor"
+                  } py-5 px-2 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+                >
+                  Photo Gallery
+                </button>
               </div>
 
               <div>
@@ -110,7 +126,7 @@ const ArtistDetails = () => {
                     bio={bio}
                     photo={photo}
                     about={about}
-                    averageRating={averageRating}
+                    averageRating={formattedAverageRating}
                     specialization={specialization}
                     location={location}
                   />
@@ -118,6 +134,7 @@ const ArtistDetails = () => {
                 {tab === "feedback" && (
                   <Feedback reviews={reviews} totalRating={totalRating} />
                 )}
+                {tab === "gallery" && <Gallery gallaryPhotos={gallaryPhotos} />}
               </div>
             </div>
             <div>

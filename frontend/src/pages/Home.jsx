@@ -181,7 +181,7 @@ const Home = () => {
       {/*-----services section ends-----*/}
 
       {/*-----Artist section starts-----*/}
-      <section>
+      {/* <section>
         <div className="container">
           <div className="xl:w-[470px] mx-auto">
             <h2 className="heading text-center text-primaryColor">
@@ -195,7 +195,7 @@ const Home = () => {
 
           <ArtistList />
         </div>
-      </section>
+      </section> */}
 
       {/*-----artist section ends-----*/}
     </>

@@ -15,7 +15,7 @@ const FeedbackForm = () => {
   const [photoLoading, setPhotoLoading] = useState(false);
   const [previewURLs, setPreviewURLs] = useState([]);
 
-  const { id } = useParams(); // Assuming this is the artist ID
+  const { id } = useParams();
 
   const handleFileInputChange = async (event) => {
     const files = Array.from(event.target.files);

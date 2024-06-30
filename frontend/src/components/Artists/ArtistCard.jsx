@@ -17,6 +17,11 @@ const ArtistCard = ({ artist }) => {
     experiences,
   } = artist;
 
+  // Format the average rating to one decimal place
+  const formattedAverageRating = averageRating
+    ? averageRating.toFixed(1)
+    : "N/A";
+
   return (
     <div className="p-4   w-[350px]  border-primaryColor ">
       <div>
@@ -38,7 +43,7 @@ const ArtistCard = ({ artist }) => {
 
         <div className="flex items-center gap-[6px]">
           <span className="flex items-center gap-[6px] text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
-            <img src={starIcon} alt="Star" /> {averageRating || 0}
+            <img src={starIcon} alt="Star" /> {formattedAverageRating || 0}
           </span>
           <span className="text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-semibold text-textColor">
             ({totalRating || 0})

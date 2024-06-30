@@ -49,6 +49,16 @@ const Tabs = ({ tab, setTab }) => {
         >
           Profile Settings
         </button>
+        <button
+          className={`${
+            tab === "gallary"
+              ? "bg-indigo-50 text-primaryColor"
+              : "bg-transparent text-headingColor"
+          } w-full btn mt-0 rounded-md`}
+          onClick={() => setTab("gallary")}
+        >
+          Gallary
+        </button>
         <div className="mt-[50px] md:mt-[100px] w-full">
           <button
             onClick={handleLogout}

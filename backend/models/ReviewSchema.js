@@ -55,13 +55,24 @@ reviewSchema.statics.calcAverageRatings = async function (artistId) {
     },
   ]);
 
-  await Artist.findByIdAndUpdate(artistId, {
-    totalRating: stats[0].numOfRating,
-    averageRating: stats[0].avgRating,
-  });
+  if (stats.length > 0) {
+    await Artist.findByIdAndUpdate(artistId, {
+      totalRating: stats[0].numOfRating,
+      averageRating: stats[0].avgRating,
+    });
+  } else {
+    await Artist.findByIdAndUpdate(artistId, {
+      totalRating: 0,
+      averageRating: 0,
+    });
+  }
 };
 
 reviewSchema.post("save", function () {
+  this.constructor.calcAverageRatings(this.artist);
+});
+
+reviewSchema.post("remove", function () {
   this.constructor.calcAverageRatings(this.artist);
 });
 

@@ -11,6 +11,8 @@ import starIcon from "../../assets/images/Star.png";
 import ArtistAbout from "../../pages/Artists/ArtistAbout";
 import Profile from "./Profile";
 import Appointments from "./Appointments";
+import Gallary from "./Gallary";
+import Gallery from "../../pages/Artists/Gallery";
 
 const ArtistProfile = () => {
   const [userData, setUserData] = useState({});
@@ -100,6 +102,7 @@ const ArtistProfile = () => {
                       qualifications={data.qualifications}
                       experiences={data.experiences}
                     />
+                    <Gallery gallaryPhotos={data.gallaryPhotos} />
                   </div>
                 )}
                 {tab === "appointments" && (
@@ -108,6 +111,11 @@ const ArtistProfile = () => {
                 {tab === "settings" && (
                   <div>
                     <Profile artistData={data} />
+                  </div>
+                )}
+                {tab === "gallary" && (
+                  <div>
+                    <Gallary artistData={data} />
                   </div>
                 )}
               </div>

@@ -1,5 +1,6 @@
 import Artist from "../models/ArtistSchema.js";
 import Booking from "../models/BookingSchema.js";
+import collaborativeFilteringAlgorithm from "./collaborativeFilteringAlgorithm.js";
 
 export const updateArtist = async (req, res) => {
   const id = req.params.id;
@@ -57,18 +58,17 @@ export const getAllArtist = async (req, res) => {
     const { query } = req.query;
     let artists;
 
-    const filter = { isApproved: "approved" };
-
     if (query) {
       artists = await Artist.find({
-        ...filter,
+        isApproved: "approved",
         $or: [
           { name: { $regex: query, $options: "i" } },
           { specialization: { $regex: query, $options: "i" } },
         ],
       }).select("-password");
     } else {
-      artists = await Artist.find(filter).select("-password");
+      // Use the collaborative filtering algorithm to get the recommended artists
+      artists = await collaborativeFilteringAlgorithm();
     }
 
     res

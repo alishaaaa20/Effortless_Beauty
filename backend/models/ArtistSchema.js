@@ -23,6 +23,10 @@ const ArtistSchema = new mongoose.Schema({
     type: Array,
   },
 
+  gallaryPhotos: {
+    type: [String],
+  },
+
   bio: { type: String, maxLength: 50 },
   about: { type: String },
   timeSlots: { type: Array },
