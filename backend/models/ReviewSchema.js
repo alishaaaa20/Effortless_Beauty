@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Artist from "./ArtistSchema.js";
 import User from "./UserSchema.js";
+import Filter from "bad-words";
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -23,7 +24,6 @@ const reviewSchema = new mongoose.Schema(
       required: true,
       min: 0,
       max: 5,
-      default: 0,
     },
     photos: {
       type: [String], // Array of URLs to the photos
@@ -31,6 +31,19 @@ const reviewSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Pre-hook for validating review text
+reviewSchema.pre("save", function (next) {
+  const filter = new Filter();
+  if (filter.isProfane(this.reviewText)) {
+    const err = new Error(
+      "Review contains inappropriate language and cannot be posted."
+    );
+    next(err);
+  } else {
+    next();
+  }
+});
 
 reviewSchema.pre(/^find/, function (next) {
   this.populate({
