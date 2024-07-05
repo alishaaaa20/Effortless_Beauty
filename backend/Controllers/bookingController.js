@@ -41,9 +41,17 @@ export const getAllBooking = async (req, res) => {
     res.status(500).json({ success: failed, message: "internal server error" });
   }
 };
+
 export const getAppointments = async (req, res) => {
   try {
-    const appointments = await Booking.find().populate("user").exec();
+    const { artistId } = req.query;
+    let query = {};
+
+    if (artistId) {
+      query = { artist: artistId };
+    }
+
+    const appointments = await Booking.find(query).populate("user").exec();
     res.status(200).json({
       success: true,
       data: appointments,

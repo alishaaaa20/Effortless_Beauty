@@ -31,9 +31,8 @@ const MyBookings = () => {
                   Payment
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Partial Payment
+                  Paid Amount
                 </th>
-
                 <th scope="col" className="px-6 py-3">
                   Service Price
                 </th>
@@ -82,11 +81,12 @@ const MyBookings = () => {
                       </div>
                     )}
                   </td>
-                  <td className="px-6 py-4">Rs. {item.partialPaymentAmount}</td>
-
+                  <td className="px-6 py-4">Rs. {item.payment.amountPaid}</td>
                   <td className="px-6 py-4">Rs. {item.ticketPrice}</td>
                   <td className="px-6 py-4">{formateDate(item.createdAt)}</td>
-                  <td className="px-6 py-4">{item.timeSlot}</td>
+                  <td className="px-6 py-4">
+                    {item.timeSlot ? `${item.timeSlot}` : "No Time Slot"}
+                  </td>
                 </tr>
               ))}
             </tbody>

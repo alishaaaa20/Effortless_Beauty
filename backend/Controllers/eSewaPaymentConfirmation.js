@@ -1,4 +1,3 @@
-// controllers/bookingController.js
 import Booking from "../models/BookingSchema.js";
 import crypto from "crypto";
 
@@ -46,11 +45,15 @@ export const verifyTransaction = async (req, res) => {
     // Update booking status based on the transaction status
     if (status === "COMPLETE") {
       booking.payment.status = "Paid";
-      await booking.save();
-      return res.json({ message: "Payment verified successfully", booking });
+      booking.isPaid = true; // Update the isPaid field
     } else {
-      return res.status(400).json({ message: "Payment not completed", status });
+      booking.payment.status = "Not Paid";
+      booking.isPaid = false; // Update the isPaid field
     }
+
+    await booking.save();
+
+    return res.json({ message: "Payment verified successfully", booking });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

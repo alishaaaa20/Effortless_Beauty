@@ -16,7 +16,7 @@ const bookingSchema = new mongoose.Schema(
     },
     ticketPrice: { type: Number, required: true },
     // bookingDate: { type: Date, required: true },
-    timeSlot: { type: String, required: true },
+    timeSlot: { type: Array, required: true },
     status: {
       type: String,
       enum: ["pending", "confirmed", "cancelled"],
@@ -25,10 +25,9 @@ const bookingSchema = new mongoose.Schema(
     payment: {
       method: { type: String, required: true },
       transactionId: { type: String },
-      amountPaid: { type: Number, required: true }, // Track amount paid
+      amountPaid: { type: Number, required: true },
     },
     isPaid: { type: Boolean, default: false },
-    isPartiallyPaid: { type: Boolean, default: false }, // New field for partial payment
     createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }

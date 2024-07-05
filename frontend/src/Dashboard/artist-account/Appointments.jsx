@@ -2,19 +2,22 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { BASE_URL, token } from "../../utils/config";
 
-const Appointments = () => {
+const Appointments = ({ artistId }) => {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/bookings/appointments`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `${BASE_URL}/bookings/appointments?artistId=${artistId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await res.json();
         if (!res.ok) {
@@ -27,7 +30,7 @@ const Appointments = () => {
     };
 
     fetchAppointments();
-  }, []);
+  }, [artistId]);
 
   return (
     <table className="w-full text-left text-sm text-gray-500">
@@ -43,7 +46,7 @@ const Appointments = () => {
             Payment
           </th>
           <th scope="col" className="px-6 py-3">
-            Partial Payment
+            Paid Amount
           </th>
           <th scope="col" className="px-6 py-3">
             Service Price
@@ -82,11 +85,6 @@ const Appointments = () => {
                   <div className="w-3 h-3 bg-green-600 rounded-full mr-2"></div>
                   Paid
                 </div>
-              ) : item.isPartiallyPaid ? (
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-yellow-600 rounded-full mr-2"></div>
-                  Partially Paid
-                </div>
               ) : (
                 <div className="flex items-center">
                   <div className="w-3 h-3 bg-red-600 rounded-full mr-2"></div>
@@ -99,7 +97,9 @@ const Appointments = () => {
             <td className="px-6 py-4">
               {new Date(item.createdAt).toLocaleDateString()}
             </td>
-            <td className="px-6 py-4">{item.timeSlot}</td>
+            <td className="px-6 py-4">
+              {item.timeSlot ? `${item.timeSlot}` : "No Time Slot"}
+            </td>
           </tr>
         ))}
       </tbody>

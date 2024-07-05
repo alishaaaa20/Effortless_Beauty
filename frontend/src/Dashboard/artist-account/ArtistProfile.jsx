@@ -150,9 +150,7 @@ const ArtistProfile = () => {
                     <Gallery gallaryPhotos={data.gallaryPhotos} />
                   </div>
                 )}
-                {tab === "appointments" && (
-                  <Appointments appointments={data.appointments} />
-                )}
+                {tab === "appointments" && <Appointments artistId={data._id} />}
                 {tab === "settings" && (
                   <div>
                     <Profile artistData={data} />

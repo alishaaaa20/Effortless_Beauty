@@ -23,7 +23,7 @@ export const createCheckoutSession = async (req, res) => {
       artist: artistId,
       user: userId,
       ticketPrice: artist.ticketPrice,
-      timeSlot,
+      timeSlot: timeSlot,
       payment: {
         method: "eSewa",
         transactionId: uuid,
@@ -60,15 +60,3 @@ export const createCheckoutSession = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-// export const getBookings = async (req, res) => {
-//   const userId = req.userId;
-
-//   try {
-//     const bookings = await Booking.find({ user: userId }).populate("artist");
-
-//     res.json(bookings);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };

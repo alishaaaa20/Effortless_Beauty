@@ -8,6 +8,7 @@ const Failure = () => {
         <p className="text-lg text-gray-500">
           Your payment was not successful.
         </p>
+        <p className="text-lg text-gray-500">Please try again.</p>
       </div>
     </div>
   );
