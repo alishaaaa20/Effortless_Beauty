@@ -44,6 +44,7 @@ const ArtistSchema = new mongoose.Schema({
     enum: ["pending", "approved", "cancelled"],
     default: "pending",
   },
+  verified: { type: Boolean, default: false },
   appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
 });
 

@@ -4,23 +4,21 @@ import {
   createBooking,
   getAllBooking,
   getBooking,
+  getAppointments,
 } from "../Controllers/bookingController.js";
-import {
-  getCheckoutSession,
-  esewaSuccess,
-  esewaFailure,
-} from "../Controllers/booking.js";
+import { createCheckoutSession } from "../Controllers/booking.js";
+import { verifyTransaction } from "../Controllers/eSewaPaymentConfirmation.js";
 
 const router = express.Router();
 
+router.get("/appointments", authenticate, getAppointments);
 // Booking routes
 router.post("/", authenticate, createBooking);
 router.get("/:id", authenticate, getBooking);
 router.get("/", authenticate, getAllBooking);
 
 // Payment routes
-router.post("/checkout-session/:artistId", authenticate, getCheckoutSession);
-router.get("/checkout-success", esewaSuccess);
-router.get("/checkout-failure", esewaFailure);
+router.post("/checkout-session/:artistId", authenticate, createCheckoutSession);
+router.post("/verify-transaction", authenticate, verifyTransaction);
 
 export default router;

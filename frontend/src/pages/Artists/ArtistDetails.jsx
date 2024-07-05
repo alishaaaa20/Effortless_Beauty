@@ -40,9 +40,7 @@ const ArtistDetails = () => {
   } = artist;
 
   // Format the average rating to one decimal place
-  const formattedAverageRating = averageRating
-    ? averageRating.toFixed(1)
-    : "N/A";
+  const formattedAverageRating = averageRating ? averageRating.toFixed(1) : "0";
 
   return (
     <section>

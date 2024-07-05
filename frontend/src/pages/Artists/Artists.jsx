@@ -47,7 +47,7 @@ const Artists = () => {
     // Fetch all approved artists on initial load
     const fetchArtists = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/artists/search/getAllArtist`);
+        const response = await fetch(`${BASE_URL}/artists`);
 
         if (response.ok) {
           const data = await response.json();
@@ -100,7 +100,7 @@ const Artists = () => {
         </div>
       </section>
 
-      <section>
+      {/* <section>
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {filteredArtists.map((artist) => (
@@ -108,7 +108,7 @@ const Artists = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/*-----Artist section starts-----*/}
 

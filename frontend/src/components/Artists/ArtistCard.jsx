@@ -18,9 +18,7 @@ const ArtistCard = ({ artist }) => {
   } = artist;
 
   // Format the average rating to one decimal place
-  const formattedAverageRating = averageRating
-    ? averageRating.toFixed(1)
-    : "N/A";
+  const formattedAverageRating = averageRating ? averageRating.toFixed(1) : "0";
 
   return (
     <div className="p-4   w-[350px]  border-primaryColor ">

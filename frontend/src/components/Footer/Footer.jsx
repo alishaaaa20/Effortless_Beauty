@@ -69,9 +69,14 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="pb-16 pt-10">
-      <div className="container">
-        <div className="flex justify-between flex-col md:flex-row flex-wrap gap-[30px]">
+    <footer
+      className="pb-16 pt-10 bg-[#e3f6f5]  "
+      // style={{
+      //   background: "#e3f6f5 url(/footerBg.svg) no-repeat center/cover ",
+      // }}
+    >
+      <div className="container z-20 relative">
+        <div className=" relative flex justify-between flex-col md:flex-row flex-wrap gap-[30px]">
           <div>
             <img src={logo} alt="" height={200} width={200} />
             <p className="text-[16px] leading-7 font-[400] text-textColor mt-4">

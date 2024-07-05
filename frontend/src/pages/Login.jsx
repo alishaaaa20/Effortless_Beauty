@@ -52,8 +52,14 @@ const Login = () => {
       toast.success(result.message);
       navigate("/home");
     } catch (error) {
+      console.log(error.message);
       setLoading(false);
+
       toast.error(error.message);
+      if (error.message === "Please verify OTP first") {
+        navigate(`/verify?email=${formData.email}`);
+        return;
+      }
       dispatch({ type: "LOGIN_FAILURE", payload: error.message });
     }
   };

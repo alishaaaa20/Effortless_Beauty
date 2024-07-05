@@ -80,19 +80,46 @@ export const getUserProfile = async (req, res) => {
 
 export const getMyAppointments = async (req, res) => {
   try {
+    // 1. Find all bookings for the current user and populate the 'artist' field
     const bookings = await Booking.find({ user: req.userId }).populate(
       "artist"
     );
-    const artistsIds = bookings.map((el) => el.artist.id);
 
-    const artists = await Artist.find({ _id: { $in: artistsIds } }).select(
+    // 2. Extract unique artist ids from the bookings
+    const artistIds = bookings.map((booking) => booking.artist._id);
+
+    // 3. Fetch artists' details based on the extracted ids
+    const artists = await Artist.find({ _id: { $in: artistIds } }).select(
       "-password"
     );
-    res
-      .status(200)
-      .json({ success: true, message: "Appointments found", data: artists });
+
+    // 4. Send response with the fetched artists' details
+    res.status(200).json({
+      success: true,
+      message: "Appointments found",
+      data: bookings.map((booking) => ({
+        _id: booking._id,
+        artist: {
+          _id: booking.artist._id,
+          name: booking.artist.name,
+          email: booking.artist.email,
+          photo: booking.artist.photo,
+          location: booking.artist.location,
+        },
+        ticketPrice: booking.ticketPrice,
+        bookingDate: booking.bookingDate,
+        timeSlot: booking.timeSlot, // Ensure timeSlot is populated in the BookingSchema
+        status: booking.status,
+        payment: booking.payment,
+        isPaid: booking.isPaid,
+        createdAt: booking.createdAt,
+      })),
+    });
   } catch (err) {
-    res.status(500).json({ success: false, message: "Not found" });
+    console.error("Error fetching appointments:", err);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to fetch appointments" });
   }
 };
 

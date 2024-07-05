@@ -21,6 +21,8 @@ export default function Profile({ artistData }) {
     photo: null,
   });
 
+  const [errors, setErrors] = useState({});
+
   useEffect(() => {
     setFormData({
       name: artistData?.name,
@@ -40,20 +42,19 @@ export default function Profile({ artistData }) {
   }, [artistData]);
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
     const data = await uploadImageToCloudinary(file);
-
     setFormData({ ...formData, photo: data?.url });
   };
 
   const handleQualificationFileChange = async (e, index) => {
     const file = e.target.files[0];
     const data = await uploadImageToCloudinary(file);
-
     setFormData((prevFormData) => {
       const updatedQualifications = [...prevFormData.qualifications];
       updatedQualifications[index].photo = data?.url;
@@ -63,6 +64,25 @@ export default function Profile({ artistData }) {
 
   const updateProfileHandler = async (e) => {
     e.preventDefault();
+    const validationErrors = {};
+    if (!formData.name) validationErrors.name = "Name is required";
+    if (!formData.email) validationErrors.email = "Email is required";
+    if (!formData.phone) validationErrors.phone = "Phone number is required";
+    if (!formData.location) validationErrors.location = "Location is required";
+    if (!formData.bio) validationErrors.bio = "Bio is required";
+    if (!formData.gender) validationErrors.gender = "Gender is required";
+    if (!formData.specialization)
+      validationErrors.specialization = "Specialization is required";
+    if (!formData.ticketPrice === "")
+      validationErrors.ticketPrice = "Service price should be a number";
+    if (!formData.about) validationErrors.about = "About is required";
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
 
     try {
       const res = await fetch(`${BASE_URL}/artists/${artistData._id}`, {
@@ -89,10 +109,10 @@ export default function Profile({ artistData }) {
     }
   };
 
-  const addItem = (key, index) => {
+  const addItem = (key, item) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [key]: [...prevFormData[key], index],
+      [key]: [...prevFormData[key], item],
     }));
   };
 
@@ -120,6 +140,7 @@ export default function Profile({ artistData }) {
       degree: "",
       institution: "",
       photo: "",
+      present: false,
     });
   };
 
@@ -139,6 +160,7 @@ export default function Profile({ artistData }) {
       endingDate: "",
       position: "",
       company: "",
+      present: false,
     });
   };
 
@@ -169,68 +191,84 @@ export default function Profile({ artistData }) {
     deleteItem("timeSlots", index);
   };
 
+  const handlePresentChange = (key, index) => {
+    setFormData((prevFormData) => {
+      const updatedItems = [...prevFormData[key]];
+      updatedItems[index].present = !updatedItems[index].present;
+      if (updatedItems[index].present) {
+        updatedItems[index].endingDate = "";
+      }
+      return { ...prevFormData, [key]: updatedItems };
+    });
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-headingColor mb-8 leading-9">
         Profile Information
       </h2>
 
-      <form>
+      <form onSubmit={updateProfileHandler}>
         <div className="mb-5">
           <p className="form__label">Name*</p>
           <input
             type="text"
-            name="name" // Ensure this matches the state key
+            name="name"
             placeholder="Enter your full name"
             className="form__input"
             value={formData.name}
             onChange={handleInputChange}
           />
+          {errors.name && <p className="text-red-500">{errors.name}</p>}
         </div>
         <div className="mb-5">
           <p className="form__label">Email*</p>
           <input
             type="email"
-            name="email" // Ensure this matches the state key
+            name="email"
             placeholder="Enter your email"
             className="form__input"
             value={formData.email}
             onChange={handleInputChange}
           />
+          {errors.email && <p className="text-red-500">{errors.email}</p>}
         </div>
         <div className="mb-5">
           <p className="form__label">Phone*</p>
           <input
             type="number"
-            name="phone" // Ensure this matches the state key
+            name="phone"
             placeholder="Enter your phone number"
             className="form__input"
             value={formData.phone}
             onChange={handleInputChange}
           />
+          {errors.phone && <p className="text-red-500">{errors.phone}</p>}
         </div>
         <div className="mb-5">
           <p className="form__label">Location*</p>
           <input
-            type="location"
+            type="text"
             name="location"
             placeholder="Enter your location"
             className="form__input"
             value={formData.location}
             onChange={handleInputChange}
           />
+          {errors.location && <p className="text-red-500">{errors.location}</p>}
         </div>
         <div className="mb-5">
           <p className="form__label">Bio*</p>
           <input
             type="text"
-            name="bio" // Ensure this matches the state key
+            name="bio"
             placeholder="Write something about yourself"
             className="form__input"
             value={formData.bio}
             onChange={handleInputChange}
             maxLength={100}
           />
+          {errors.bio && <p className="text-red-500">{errors.bio}</p>}
         </div>
         <div className="mb-5">
           <div className="grid grid-cols-3 gap-5 mb-[30px]">
@@ -238,263 +276,266 @@ export default function Profile({ artistData }) {
               <p className="form__label">Gender*</p>
               <select
                 name="gender"
+                className="form__input"
                 value={formData.gender}
                 onChange={handleInputChange}
-                className="form__input py-3.5 px-4 w-full border bg-white border-primaryColor rounded-md focus:outline-none focus:ring-2 focus:ring-primaryColor focus:border-transparent"
               >
-                <option value="">Select</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
+              {errors.gender && <p className="text-red-500">{errors.gender}</p>}
             </div>
             <div>
               <p className="form__label">Specialization*</p>
               <input
                 type="text"
-                name="specialization" // Ensure this matches the state key
-                placeholder="Specialization"
+                name="specialization"
+                placeholder="Your Specialization"
                 className="form__input"
                 value={formData.specialization}
                 onChange={handleInputChange}
               />
+              {errors.specialization && (
+                <p className="text-red-500">{errors.specialization}</p>
+              )}
             </div>
             <div>
-              <p className="form__label">Service Price*</p>
+              <p className="form__label">Service Price ($)*</p>
               <input
                 type="number"
-                name="ticketPrice" // Ensure this matches the state key
-                placeholder="Enter your service price"
+                name="ticketPrice"
+                placeholder="Ticket Price"
                 className="form__input"
                 value={formData.ticketPrice}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setFormData((prevFormData) => ({
-                    ...prevFormData,
-                    ticketPrice: value < 0 ? 0 : value,
-                  }));
-                }}
+                onChange={handleInputChange}
               />
+              {errors.ticketPrice && (
+                <p className="text-red-500">{errors.ticketPrice}</p>
+              )}
             </div>
           </div>
         </div>
+
         <div className="mb-5">
-          <p className="form__label">Qualifications*</p>
+          <p className="form__label">About*</p>
+          <textarea
+            name="about"
+            placeholder="Write about yourself"
+            className="form__input"
+            value={formData.about}
+            onChange={handleInputChange}
+          />
+          {errors.about && <p className="text-red-500">{errors.about}</p>}
+        </div>
+
+        <div className="mb-8">
+          <p className="form__label">Qualifications</p>
           {formData.qualifications?.map((item, index) => (
-            <div key={index}>
-              <div>
-                <div className="grid grid-cols-2 gap-5 ">
-                  <div>
-                    <p className="form__label">Starting Date*</p>
-                    <input
-                      type="date"
-                      name="startingDate"
-                      value={item.startingDate}
-                      className="form__input"
-                      onChange={(e) => handleQualificationChange(e, index)}
-                    />
-                  </div>
-                  <div>
-                    <p className="form__label">Ending Date*</p>
-                    <input
-                      type="date"
-                      name="endingDate"
-                      value={item.endingDate}
-                      className="form__input"
-                      onChange={(e) => handleQualificationChange(e, index)}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-5 mb-[30px]">
-                  <div>
-                    <p className="form__label">Degree*</p>
-                    <input
-                      type="text"
-                      name="degree"
-                      placeholder="Degree"
-                      className="form__input"
-                      value={item.degree}
-                      onChange={(e) => handleQualificationChange(e, index)}
-                    />
-                  </div>
-                  <div>
-                    <p className="form__label">Institution*</p>
-                    <input
-                      type="text"
-                      name="institution"
-                      placeholder="Institution"
-                      className="form__input"
-                      value={item.institution}
-                      onChange={(e) => handleQualificationChange(e, index)}
-                    />
-                  </div>
-                </div>
-                <div className="mb-5">
-                  <p className="form__label">Upload Certificate Photo*</p>
+            <div key={index} className="relative mb-5 p-4 rounded border">
+              <div className="grid grid-cols-2 gap-5 ">
+                <div>
+                  <p className="form__label">Starting Date*</p>
                   <input
-                    type="file"
-                    name="photo"
+                    type="date"
+                    name="startingDate"
+                    value={item.startingDate}
                     className="form__input"
-                    onChange={(e) => handleQualificationFileChange(e, index)}
+                    onChange={(e) => handleQualificationChange(e, index)}
+                    max={new Date().toISOString().split("T")[0]}
                   />
-                  {item.photo && (
-                    <img
-                      src={item.photo}
-                      alt="Qualification Certificate"
-                      className="mt-2 h-24 w-24 object-cover"
-                    />
-                  )}
                 </div>
-                <button
-                  className="bg-red-500 text-white px-4 py-2 mb-3 rounded"
-                  onClick={(e) => deleteQualification(e, index)}
-                >
-                  Delete
-                </button>
+                <div>
+                  <p className="form__label">Ending Date*</p>
+                  <input
+                    type="date"
+                    name="endingDate"
+                    value={item.present ? "" : item.endingDate}
+                    className="form__input"
+                    onChange={(e) => handleQualificationChange(e, index)}
+                    disabled={item.present}
+                    max={new Date().toISOString().split("T")[0]}
+                  />
+                </div>
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="checkbox"
+                    name="present"
+                    checked={item.present}
+                    onChange={() =>
+                      handlePresentChange("qualifications", index)
+                    }
+                  />
+                  <label>Present</label>
+                </div>
               </div>
+              <div>
+                <p className="form__label">Degree*</p>
+                <input
+                  type="text"
+                  name="degree"
+                  value={item.degree}
+                  className="form__input"
+                  onChange={(e) => handleQualificationChange(e, index)}
+                />
+              </div>
+              <div>
+                <p className="form__label">Institution*</p>
+                <input
+                  type="text"
+                  name="institution"
+                  value={item.institution}
+                  className="form__input"
+                  onChange={(e) => handleQualificationChange(e, index)}
+                />
+              </div>
+              <div className="mt-3">
+                <p className="form__label">Photo</p>
+                <input
+                  type="file"
+                  className="form__input"
+                  onChange={(e) => handleQualificationFileChange(e, index)}
+                />
+              </div>
+              <button
+                className="absolute -top-8 -right-3 bg-red-600 p-1 rounded text-white text-lg"
+                onClick={(e) => deleteQualification(e, index)}
+              >
+                <AiOutlineDelete />
+              </button>
             </div>
           ))}
           <button
-            className="bg-primaryColor text-white px-4 py-2 rounded"
+            className="bg-primaryColor py-2 px-4 rounded text-white"
             onClick={addQualification}
           >
             Add Qualification
           </button>
         </div>
-        <div className="mb-5">
-          <p className="form__label">Experiences*</p>
+
+        <div className="mb-8">
+          <p className="form__label">Experience</p>
           {formData.experiences?.map((item, index) => (
-            <div key={index}>
-              <div>
-                <div className="grid grid-cols-2 gap-5 ">
-                  <div>
-                    <p className="form__label">Starting Date*</p>
-                    <input
-                      type="date"
-                      name="startingDate"
-                      value={item.startingDate}
-                      className="form__input"
-                      onChange={(e) => handleExperienceChange(e, index)}
-                    />
-                  </div>
-                  <div>
-                    <p className="form__label">Ending Date*</p>
-                    <input
-                      type="date"
-                      name="endingDate"
-                      value={item.endingDate}
-                      className="form__input"
-                      onChange={(e) => handleExperienceChange(e, index)}
-                    />
-                  </div>
+            <div key={index} className="relative mb-5 p-4 rounded border">
+              <div className="grid grid-cols-2 gap-5 ">
+                <div>
+                  <p className="form__label">Starting Date*</p>
+                  <input
+                    type="date"
+                    name="startingDate"
+                    value={item.startingDate}
+                    className="form__input"
+                    onChange={(e) => handleExperienceChange(e, index)}
+                    max={new Date().toISOString().split("T")[0]}
+                  />
                 </div>
-                <div className="grid grid-cols-2 gap-5 mb-[30px]">
-                  <div>
-                    <p className="form__label">Position*</p>
-                    <input
-                      type="text"
-                      name="position"
-                      placeholder="Position"
-                      className="form__input"
-                      value={item.position}
-                      onChange={(e) => handleExperienceChange(e, index)}
-                    />
-                  </div>
-                  <div>
-                    <p className="form__label">Company*</p>
-                    <input
-                      type="text"
-                      name="company"
-                      placeholder="Company"
-                      className="form__input"
-                      value={item.company}
-                      onChange={(e) => handleExperienceChange(e, index)}
-                    />
-                  </div>
+                <div>
+                  <p className="form__label">Ending Date*</p>
+                  <input
+                    type="date"
+                    name="endingDate"
+                    value={item.present ? "" : item.endingDate}
+                    className="form__input"
+                    onChange={(e) => handleExperienceChange(e, index)}
+                    disabled={item.present}
+                    max={new Date().toISOString().split("T")[0]}
+                  />
                 </div>
-                <button
-                  className="bg-red-500 text-white px-4 py-2 mb-3 rounded"
-                  onClick={(e) => deleteExperience(e, index)}
-                >
-                  Delete
-                </button>
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="checkbox"
+                    name="present"
+                    checked={item.present}
+                    onChange={() => handlePresentChange("experiences", index)}
+                  />
+                  <label>Present</label>
+                </div>
               </div>
+              <div>
+                <p className="form__label">Position*</p>
+                <input
+                  type="text"
+                  name="position"
+                  value={item.position}
+                  className="form__input"
+                  onChange={(e) => handleExperienceChange(e, index)}
+                />
+              </div>
+              <div>
+                <p className="form__label">Company*</p>
+                <input
+                  type="text"
+                  name="company"
+                  value={item.company}
+                  className="form__input"
+                  onChange={(e) => handleExperienceChange(e, index)}
+                />
+              </div>
+              <button
+                className="absolute -top-8 -right-3 bg-red-600 p-1 rounded text-white text-lg"
+                onClick={(e) => deleteExperience(e, index)}
+              >
+                <AiOutlineDelete />
+              </button>
             </div>
           ))}
           <button
-            className="bg-primaryColor text-white px-4 py-2 rounded"
+            className="bg-primaryColor py-2 px-4 rounded text-white"
             onClick={addExperience}
           >
             Add Experience
           </button>
         </div>
-        <div className="mb-5">
-          <p className="form__label">Time Slots*</p>
+
+        <div className="mb-8">
+          <p className="form__label">Time Slots</p>
           {formData.timeSlots?.map((item, index) => (
-            <div key={index}>
+            <div key={index} className="relative mb-5 p-4 rounded border">
               <div>
-                <div className="grid grid-cols-2 gap-5 ">
-                  <div>
-                    <p className="form__label">Day*</p>
-                    <input
-                      type="text"
-                      name="day"
-                      value={item.day}
-                      className="form__input"
-                      onChange={(e) => handleTimeSlotChange(e, index)}
-                    />
-                  </div>
-                  <div>
-                    <p className="form__label">Starting Time*</p>
-                    <input
-                      type="time"
-                      name="startingTime"
-                      value={item.startingTime}
-                      className="form__input"
-                      onChange={(e) => handleTimeSlotChange(e, index)}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-5 mb-[30px]">
-                  <div>
-                    <p className="form__label">Ending Time*</p>
-                    <input
-                      type="time"
-                      name="endingTime"
-                      value={item.endingTime}
-                      className="form__input"
-                      onChange={(e) => handleTimeSlotChange(e, index)}
-                    />
-                  </div>
-                </div>
-                <button
-                  className="bg-red-500 text-white px-4 py-2 mb-3 rounded"
-                  onClick={(e) => deleteTimeSlot(e, index)}
-                >
-                  Delete
-                </button>
+                <p className="form__label">Day*</p>
+                <input
+                  type="text"
+                  name="day"
+                  value={item.day}
+                  className="form__input"
+                  onChange={(e) => handleTimeSlotChange(e, index)}
+                />
               </div>
+              <div>
+                <p className="form__label">Starting Time*</p>
+                <input
+                  type="time"
+                  name="startingTime"
+                  value={item.startingTime}
+                  className="form__input"
+                  onChange={(e) => handleTimeSlotChange(e, index)}
+                />
+              </div>
+              <div>
+                <p className="form__label">Ending Time*</p>
+                <input
+                  type="time"
+                  name="endingTime"
+                  value={item.endingTime}
+                  className="form__input"
+                  onChange={(e) => handleTimeSlotChange(e, index)}
+                />
+              </div>
+              <button
+                className="absolute -top-8 -right-3 bg-red-600 p-1 rounded text-white text-lg"
+                onClick={(e) => deleteTimeSlot(e, index)}
+              >
+                <AiOutlineDelete />
+              </button>
             </div>
           ))}
           <button
-            className="bg-primaryColor text-white px-4 py-2 rounded"
+            className="bg-primaryColor py-2 px-4 rounded text-white"
             onClick={addTimeSlot}
           >
             Add Time Slot
           </button>
         </div>
-        <div className="mt-5">
-          <p className="form__label">About*</p>
-          <textarea
-            name="about"
-            placeholder="Write something about yourself"
-            className="form__input"
-            value={formData.about}
-            onChange={handleInputChange}
-            rows={5}
-          />
-        </div>
-
         <div className="mt-5">
           <p className="form__label">Upload Profile Photo*</p>
           <input
@@ -511,12 +552,12 @@ export default function Profile({ artistData }) {
             />
           )}
         </div>
+
         <button
           type="submit"
-          className="bg-primaryColor text-white px-4 py-2 mt-5 rounded"
-          onClick={updateProfileHandler}
+          className="bg-primaryColor py-2 px-4 rounded text-white mt-4"
         >
-          Save
+          Update Profile
         </button>
       </form>
     </div>

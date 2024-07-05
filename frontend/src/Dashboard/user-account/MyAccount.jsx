@@ -44,7 +44,7 @@ const MyAccount = () => {
 
   return (
     <section className="py-10">
-      <div className="max-w-[1170px] px-5 mx-auto">
+      <div className="max-w-[1170px] mx-2">
         {loading && !error && <Loading />}
         {error && !loading && <Error errMessage={error} />}
         {!loading && !error && (

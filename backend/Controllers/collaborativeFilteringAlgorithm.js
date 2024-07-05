@@ -25,11 +25,12 @@ const categorizeArtistsByRating = (sortedArtists) => {
     3: [],
     2: [],
     1: [],
+    0: [],
   };
 
   sortedArtists.forEach((artist) => {
     const rating = Math.floor(artist.averageRating); // Get the integer part of the rating
-    if (rating >= 1 && rating <= 5) {
+    if (rating >= 0 && rating <= 5) {
       categorizedArtists[rating].push(artist);
     }
   });
@@ -45,6 +46,7 @@ const createRecommendationList = (categorizedArtists) => {
     ...categorizedArtists[3],
     ...categorizedArtists[2],
     ...categorizedArtists[1],
+    ...categorizedArtists[0],
   ];
 };
 

@@ -1,31 +1,35 @@
 import mongoose from "mongoose";
+import Artist from "./ArtistSchema.js";
+import User from "./UserSchema.js";
 
 const bookingSchema = new mongoose.Schema(
   {
     artist: {
       type: mongoose.Types.ObjectId,
-      ref: "Makeup Artist",
+      ref: Artist.modelName,
       required: true,
     },
     user: {
       type: mongoose.Types.ObjectId,
-      ref: "User",
+      ref: User.modelName,
       required: true,
     },
-    servicePrice: { type: String, required: true },
-    // appointmentDate: {
-    //   type: Date,
-    //   required: true,
-    // },
+    ticketPrice: { type: Number, required: true },
+    // bookingDate: { type: Date, required: true },
+    timeSlot: { type: String, required: true },
     status: {
       type: String,
-      enum: ["pending", "approved", "cancelled"],
+      enum: ["pending", "confirmed", "cancelled"],
       default: "pending",
     },
-    isPaid: {
-      type: Boolean,
-      default: true,
+    payment: {
+      method: { type: String, required: true },
+      transactionId: { type: String },
+      amountPaid: { type: Number, required: true }, // Track amount paid
     },
+    isPaid: { type: Boolean, default: false },
+    isPartiallyPaid: { type: Boolean, default: false }, // New field for partial payment
+    createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );

@@ -70,7 +70,7 @@ const Signup = () => {
       toast.success(message);
 
       dispatch({ type: "REGISTER_SUCCESS" });
-      navigate("/login");
+      navigate(`/verify?email=${formData.email}`);
     } catch (err) {
       toast.error(err.message);
       setLoading(false);
@@ -196,7 +196,7 @@ const Signup = () => {
                     id="customFile"
                     onChange={handleFileInputChange}
                     accept=".jpg, .jpeg, .png"
-                    className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                    className="absolute top-0 left-0 w-[50px] h-[50px] opacity-0 cursor-pointer object-cover"
                     required
                   />
 

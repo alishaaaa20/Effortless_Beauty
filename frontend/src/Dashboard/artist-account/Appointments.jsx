@@ -1,7 +1,34 @@
-import React from "react";
-import { formateDate } from "../../utils/formateDate";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { BASE_URL, token } from "../../utils/config";
 
-const Appointments = ({ appointments }) => {
+const Appointments = () => {
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/bookings/appointments`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to fetch appointments.");
+        }
+        setAppointments(data.data);
+      } catch (err) {
+        toast.error(err.message);
+      }
+    };
+
+    fetchAppointments();
+  }, []);
+
   return (
     <table className="w-full text-left text-sm text-gray-500">
       <thead className="text-sm text-gray-700 uppercase bg-gray-100">
@@ -16,10 +43,16 @@ const Appointments = ({ appointments }) => {
             Payment
           </th>
           <th scope="col" className="px-6 py-3">
+            Partial Payment
+          </th>
+          <th scope="col" className="px-6 py-3">
             Service Price
           </th>
           <th scope="col" className="px-6 py-3">
             Booked on
+          </th>
+          <th scope="col" className="px-6 py-3">
+            Time Slot
           </th>
         </tr>
       </thead>
@@ -44,26 +77,29 @@ const Appointments = ({ appointments }) => {
             </th>
             <td className="px-6 py-4">{item.user.location}</td>
             <td className="px-6 py-4">
-              {item.isPaid && (
+              {item.isPaid ? (
                 <div className="flex items-center">
-                  <div className="w-3 h-3 bg-green-600 rounded-full mr-2">
-                    Paid
-                  </div>
+                  <div className="w-3 h-3 bg-green-600 rounded-full mr-2"></div>
+                  Paid
                 </div>
-              )}
-              {!item.isPaid && (
+              ) : item.isPartiallyPaid ? (
                 <div className="flex items-center">
-                  <div className="w-3 h-3 bg-red-600 rounded-full mr-2">
-                    Not Paid
-                  </div>
+                  <div className="w-3 h-3 bg-yellow-600 rounded-full mr-2"></div>
+                  Partially Paid
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-red-600 rounded-full mr-2"></div>
+                  Not Paid
                 </div>
               )}
             </td>
-            <td className="px-6 py-4">Rs. {item.user.ticketPrice}</td>
+            <td className="px-6 py-4">Rs. {item.payment.amountPaid}</td>
+            <td className="px-6 py-4">Rs. {item.ticketPrice}</td>
             <td className="px-6 py-4">
-              {/* {new Date(item.createdAt).toDateString()} */}
-              {formateDate(item.createdAt)}
+              {new Date(item.createdAt).toLocaleDateString()}
             </td>
+            <td className="px-6 py-4">{item.timeSlot}</td>
           </tr>
         ))}
       </tbody>

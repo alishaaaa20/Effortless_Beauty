@@ -13,6 +13,9 @@ import MyAccount from "../Dashboard/user-account/MyAccount";
 import ArtistProfile from "../Dashboard/artist-account/ArtistProfile";
 import ProjectedRoute from "./ProjectedRoute";
 import CheckoutSuccess from "../pages/CheckoutSuccess";
+import OTPCode from "../pages/OTPCode";
+import Success from "../pages/Success";
+import Failure from "../pages/Failure";
 
 const Router = () => {
   return (
@@ -23,12 +26,15 @@ const Router = () => {
       <Route path="/artists/:id" element={<ArtistDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
+      <Route path="/verify" element={<OTPCode />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/services" element={<Services />} />
       <Route path="/userdashboard" element={<UserDashboard />} />
       <Route path="/artistdashboard" element={<ArtistDashboard />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
+      <Route path="/success" element={<Success />} />
+      <Route path="/failure" element={<Failure />} />
       <Route
         path="/users/profile/me"
         element={

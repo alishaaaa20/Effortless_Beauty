@@ -15,6 +15,7 @@ const UserSchema = new mongoose.Schema({
   },
   gender: { type: String, enum: ["male", "female", "other"] },
   appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
+  verified: { type: Boolean, default: false },
 });
 
 export default mongoose.model("User", UserSchema);

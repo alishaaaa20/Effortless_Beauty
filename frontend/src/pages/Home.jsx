@@ -1,7 +1,7 @@
 import React from "react";
 import icons02 from "../assets/images/icon02.png";
 import icons03 from "../assets/images/icon03.png";
-import icons04 from "../assets/images/khalti-logo.jpg";
+import icons04 from "../assets/images/esewa-logo.png";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
@@ -52,7 +52,7 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]">
             <div className="py-[30px] px-5">
               <div className="flex items-center justify-center">
-                <img src={icons02} alt="" />
+                <img src={icons02} alt="" className="w-[250px]" />
               </div>
               <div className="mt-[30px]">
                 <h2 className="text-[22px] leading-9 text-headingColor font-[700] text-center">
@@ -71,9 +71,9 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="py-[30px] px-5">
+            <div className="py-[30px] px-5 ">
               <div className="flex items-center justify-center">
-                <img src={icons03} alt="" />
+                <img src={icons03} alt="" className="w-[250px]" />
               </div>
               <div className="mt-[30px]">
                 <h2 className="text-[22px] leading-9 text-headingColor font-[700] text-center">
@@ -92,16 +92,16 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="py-[30px] px-5">
+            <div className="py-[30px] px-5 mt-4">
               <div className="flex items-center justify-center">
-                <img src={icons04} alt="" />
+                <img src={icons04} alt="" className="w-[250px]" />
               </div>
               <div className="mt-[30px]">
                 <h2 className="text-[22px] leading-9 text-headingColor font-[700] text-center">
                   Make a Pre-Payment
                 </h2>
                 <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  We provide a secure payment through Khalti.
+                  We provide a secure payment through Esewa.
                 </p>
 
                 <Link
