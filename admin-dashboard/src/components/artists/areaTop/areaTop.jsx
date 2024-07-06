@@ -1,5 +1,5 @@
 import { MdOutlineMenu } from "react-icons/md";
-import "./AreaTop.scss";
+import "./areaTop.scss";
 import { useContext, useEffect, useRef, useState } from "react";
 import { SidebarContext } from "../../../context/SidebarContext";
 import "react-date-range/dist/styles.css"; // main style file
