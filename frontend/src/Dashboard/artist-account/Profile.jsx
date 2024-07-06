@@ -176,7 +176,7 @@ export default function Profile({ artistData }) {
   const addTimeSlot = (e) => {
     e.preventDefault();
     addItem("timeSlots", {
-      day: "",
+      date: "",
       startingTime: "",
       endingTime: "",
     });
@@ -492,11 +492,11 @@ export default function Profile({ artistData }) {
           {formData.timeSlots?.map((item, index) => (
             <div key={index} className="relative mb-5 p-4 rounded border">
               <div>
-                <p className="form__label">Day*</p>
+                <p className="form__label">Date*</p>
                 <input
-                  type="text"
-                  name="day"
-                  value={item.day}
+                  type="date"
+                  name="date"
+                  value={item.date}
                   className="form__input"
                   onChange={(e) => handleTimeSlotChange(e, index)}
                 />

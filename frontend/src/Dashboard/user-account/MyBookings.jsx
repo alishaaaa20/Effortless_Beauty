@@ -12,6 +12,8 @@ const MyBookings = () => {
     error,
   } = useFetchData(`${BASE_URL}/users/appointments/my-appointments`);
 
+  console.log(appointments);
+
   return (
     <div>
       {loading && !error && <Loading />}
@@ -85,7 +87,14 @@ const MyBookings = () => {
                   <td className="px-6 py-4">Rs. {item.ticketPrice}</td>
                   <td className="px-6 py-4">{formateDate(item.createdAt)}</td>
                   <td className="px-6 py-4">
-                    {item.timeSlot ? `${item.timeSlot}` : "No Time Slot"}
+                    {item.timeSlots.map((slot, index) => (
+                      <div key={index}>
+                        <p className="text-[14px]">{slot.date}</p>
+                        <p className="text-[14px]">
+                          {slot.startingTime} - {slot.endingTime}
+                        </p>
+                      </div>
+                    ))}
                   </td>
                 </tr>
               ))}

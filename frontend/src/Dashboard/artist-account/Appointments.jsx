@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { BASE_URL, token } from "../../utils/config";
+import convertTime from "../../utils/convertTime.js";
 
 const Appointments = ({ artistId }) => {
   const [appointments, setAppointments] = useState([]);
@@ -36,50 +37,52 @@ const Appointments = ({ artistId }) => {
     <table className="w-full text-left text-sm text-gray-500">
       <thead className="text-sm text-gray-700 uppercase bg-gray-100">
         <tr>
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-4 py-2 ">
             Name
           </th>
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-4 py-2 ">
             Location
           </th>
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-4 py-2 ">
             Payment
           </th>
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-4 py-2 ">
             Paid Amount
           </th>
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-4 py-2 ">
             Service Price
           </th>
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-4 py-2 ">
             Booked on
           </th>
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-4 py-2 w-1/4">
             Time Slot
           </th>
         </tr>
       </thead>
       <tbody>
         {appointments?.map((item) => (
-          <tr key={item._id}>
+          <tr key={item._id} className="hover:bg-gray-100">
             <th
               scope="row"
-              className="flex items-center px-6 py-4 whitespace-nowrap text-gray-900"
+              className="flex items-center px-4 py-2 whitespace-nowrap text-gray-900"
             >
               <img
                 src={item.user.photo}
                 alt="user"
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-8 rounded-full object-cover"
               />
               <div className="pl-3">
-                <div className="text-base font-medium">{item.user.name}</div>
-                <div className="text-normal text-gray-500">
+                <div className="text-base font-medium truncate w-32">
+                  {item.user.name}
+                </div>
+                <div className="text-normal text-gray-500 truncate w-32">
                   {item.user.email}
                 </div>
               </div>
             </th>
-            <td className="px-6 py-4">{item.user.location}</td>
-            <td className="px-6 py-4">
+            <td className="px-4 py-2 truncate w-32">{item.user.location}</td>
+            <td className="px-4 py-2">
               {item.isPaid ? (
                 <div className="flex items-center">
                   <div className="w-3 h-3 bg-green-600 rounded-full mr-2"></div>
@@ -92,13 +95,21 @@ const Appointments = ({ artistId }) => {
                 </div>
               )}
             </td>
-            <td className="px-6 py-4">Rs. {item.payment.amountPaid}</td>
-            <td className="px-6 py-4">Rs. {item.ticketPrice}</td>
-            <td className="px-6 py-4">
+            <td className="px-4 py-2">Rs. {item.payment.amountPaid}</td>
+            <td className="px-4 py-2">Rs. {item.ticketPrice}</td>
+            <td className="px-4 py-2">
               {new Date(item.createdAt).toLocaleDateString()}
             </td>
-            <td className="px-6 py-4">
-              {item.timeSlot ? `${item.timeSlot}` : "No Time Slot"}
+            <td className="px-4 py-2">
+              {item.timeSlots.map((slot, index) => (
+                <div
+                  key={index}
+                  className="text-[12px] leading-6 text-textColor font-semibold"
+                >
+                  {slot.date}: {convertTime(slot.startingTime)} -{" "}
+                  {convertTime(slot.endingTime)}
+                </div>
+              ))}
             </td>
           </tr>
         ))}

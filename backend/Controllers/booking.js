@@ -23,13 +23,14 @@ export const createCheckoutSession = async (req, res) => {
       artist: artistId,
       user: userId,
       ticketPrice: artist.ticketPrice,
-      timeSlot: timeSlot,
+      timeSlots: artist.timeSlots,
       payment: {
         method: "eSewa",
         transactionId: uuid,
         amountPaid: artist.ticketPrice,
       },
     });
+    console.log(booking);
 
     await booking.save();
 

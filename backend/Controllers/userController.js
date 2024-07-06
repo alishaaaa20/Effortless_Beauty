@@ -108,7 +108,7 @@ export const getMyAppointments = async (req, res) => {
         },
         ticketPrice: booking.ticketPrice,
         bookingDate: booking.bookingDate,
-        timeSlot: booking.timeSlot, // Ensure timeSlot is populated in the BookingSchema
+        timeSlots: booking.timeSlots, // Ensure timeSlot is populated in the BookingSchema
         status: booking.status,
         payment: booking.payment,
         isPaid: booking.isPaid,

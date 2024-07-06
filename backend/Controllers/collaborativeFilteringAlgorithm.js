@@ -8,12 +8,13 @@ const fetchApprovedArtists = async () => {
     );
     return artists;
   } catch (error) {
+    console.error("Failed to fetch approved artists:", error);
     throw new Error("Failed to fetch approved artists");
   }
 };
 
 // Step 2: Sort Artists by Average Rating
-const sortArtistsByRating = (artists) => {
+const sortArtistsByAverageRating = (artists) => {
   return artists.sort((a, b) => b.averageRating - a.averageRating);
 };
 
@@ -53,12 +54,13 @@ const createRecommendationList = (categorizedArtists) => {
 // Full Recommendation Algorithm
 const collaborativeFilteringAlgorithm = async () => {
   try {
-    const artists = await fetchApprovedArtists();
-    const sortedArtists = sortArtistsByRating(artists);
+    const approvedArtists = await fetchApprovedArtists();
+    const sortedArtists = sortArtistsByAverageRating(approvedArtists);
     const categorizedArtists = categorizeArtistsByRating(sortedArtists);
     const recommendationList = createRecommendationList(categorizedArtists);
     return recommendationList;
   } catch (error) {
+    console.error("Failed to process artists:", error);
     throw new Error("Failed to process artists");
   }
 };
