@@ -499,6 +499,7 @@ export default function Profile({ artistData }) {
                   value={item.date}
                   className="form__input"
                   onChange={(e) => handleTimeSlotChange(e, index)}
+                  min={new Date().toISOString().split("T")[0]}
                 />
               </div>
               <div>
