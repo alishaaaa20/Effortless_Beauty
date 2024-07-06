@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { BASE_URL, token } from "../utils/config";
+import { FaCheckCircle } from "react-icons/fa";
 
 const Success = () => {
   const [verificationResult, setVerificationResult] = useState(null);
@@ -46,6 +47,7 @@ const Success = () => {
       <div className="text-center">
         {verificationResult ? (
           <>
+          <FaCheckCircle className="text-greeb-600" size={30} />
             <h1 className="text-4xl font-bold text-green-500">Success</h1>
             <p className="text-lg text-gray-500">
               Your payment was successful.
