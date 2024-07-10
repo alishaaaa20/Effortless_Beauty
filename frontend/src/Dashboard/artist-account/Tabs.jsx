@@ -59,6 +59,17 @@ const Tabs = ({ tab, setTab }) => {
         >
           Gallary
         </button>
+        <button
+          className={`${
+            tab === "documents"
+              ? "bg-indigo-50 text-primaryColor"
+              : "bg-transparent text-headingColor"
+          } w-full btn mt-0 rounded-md`}
+          onClick={() => setTab("documents")}
+        >
+          Documents
+        </button>
+
         <div className="mt-[50px] md:mt-[100px] w-full">
           <button
             onClick={handleLogout}

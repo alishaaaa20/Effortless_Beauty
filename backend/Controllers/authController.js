@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import OtpSchema from "../models/OtpSchema.js";
+import crypto from "crypto";
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -138,8 +139,19 @@ export const sendOTP = async ({ email }) => {
 };
 
 export const register = async (req, res) => {
-  const { email, password, name, role, photo, gender, phone, location } =
-    req.body;
+  const {
+    email,
+    password,
+    name,
+    role,
+    photo,
+    gender,
+    phone,
+    location,
+    documentName,
+    documentNumber,
+    documentPhotos,
+  } = req.body;
 
   try {
     let user = null;
@@ -185,6 +197,15 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
+    // Encrypt document number
+    const cipher = crypto.createCipheriv(
+      "aes-256-cbc",
+      Buffer.from(process.env.ENCRYPTION_KEY, "hex"),
+      Buffer.from(process.env.IV, "hex")
+    );
+    let encryptedDocumentNumber = cipher.update(documentNumber, "utf8", "hex");
+    encryptedDocumentNumber += cipher.final("hex");
+
     if (role === "customer") {
       user = new User({
         name,
@@ -195,6 +216,9 @@ export const register = async (req, res) => {
         role,
         phone,
         location,
+        documentName,
+        documentNumber: encryptedDocumentNumber,
+        documentPhotos,
       });
     }
 
@@ -209,8 +233,12 @@ export const register = async (req, res) => {
         role,
         phone,
         location,
+        documentName,
+        documentNumber: encryptedDocumentNumber,
+        documentPhotos,
       });
     }
+
     console.log("Saving user:", user);
     // Save user to the database
     const result = await user.save();
@@ -225,7 +253,6 @@ export const register = async (req, res) => {
       .json({ success: false, message: "Internal server error, Try again" }); // Handle errors gracefully
   }
 };
-
 function isPasswordValid(password) {
   // Check if password length is at least 8 characters
   if (password.length < 8) {

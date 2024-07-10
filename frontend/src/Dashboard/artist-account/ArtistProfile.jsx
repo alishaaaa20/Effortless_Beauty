@@ -161,6 +161,50 @@ const ArtistProfile = () => {
                     <Gallary artistData={data} />
                   </div>
                 )}
+                {tab === "documents" && (
+                  <div>
+                    <h2 className="text-lg text-headingColor font-semibold mt-8">
+                      My Documents
+                    </h2>
+                    <div className="mt-5 space-y-4">
+                      <div className="flex flex-col">
+                        <p className="text-md text-headingColor font-semibold">
+                          Document Name
+                        </p>
+                        <p className="text-md text-textColor font-normal">
+                          {data.documentName}
+                        </p>
+                      </div>
+                      <div className="flex flex-col mt-4">
+                        <p className="text-md text-headingColor font-semibold">
+                          Document Number
+                        </p>
+                        <p className="text-md text-textColor font-normal">
+                          {data.documentNumber}
+                        </p>
+                      </div>
+                      <div className="flex flex-col mt-4">
+                        <p className="text-md text-headingColor font-semibold">
+                          Document Photos
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {data.documentPhotos.map((photo) => (
+                            <figure
+                              key={photo}
+                              className=" border-2 border-solid border-primaryColor rounded-md"
+                            >
+                              <img
+                                src={photo}
+                                alt="Document"
+                                className="w-[200px] h-[150px] object-cover rounded-md"
+                              />
+                            </figure>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
