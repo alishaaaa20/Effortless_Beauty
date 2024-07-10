@@ -7,6 +7,7 @@ import {
   getMyAppointments,
   getUserProfile,
   getTotalUser,
+  getUserProfiles,
 } from "../Controllers/userController.js";
 import { authenticate, restrict } from "../auth/verifyToken.js";
 
@@ -27,6 +28,7 @@ router.get(
   getMyAppointments
 );
 router.get("/total", getTotalUser);
+router.get("/:id/profiles", getUserProfiles);
 router.get("/", getAllUser);
 router.get("/:id", authenticate, restrict(["customer"]), getSingleUser);
 router.put("/:id", authenticate, restrict(["customer"]), updateUser);

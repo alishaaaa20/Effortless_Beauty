@@ -134,3 +134,25 @@ export const getTotalUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Not found okkkk" });
   }
 };
+
+export const getUserProfiles = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    const { password, ...rest } = user._doc;
+    res.status(200).json({
+      success: true,
+      message: "Getting Profile info ",
+      data: { ...rest },
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Not found" });
+  }
+};

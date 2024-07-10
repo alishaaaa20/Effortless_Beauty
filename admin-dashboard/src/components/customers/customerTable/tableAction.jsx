@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-const TableAction = () => {
+const TableAction = ({ userId }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+
   const handleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
@@ -19,7 +21,7 @@ const TableAction = () => {
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -35,7 +37,10 @@ const TableAction = () => {
           <div className="action-dropdown-menu" ref={dropdownRef}>
             <ul className="dropdown-menu-list">
               <li className="dropdown-menu-item">
-                <Link to="/view" className="dropdown-menu-link">
+                <Link
+                  to={`/customers/${userId}`}
+                  className="dropdown-menu-link"
+                >
                   View
                 </Link>
               </li>

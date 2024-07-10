@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import starIcon from "../../../assets/icons/moon.svg";
 import ArtistAbout from "./ArtistAbout";
 import Feedback from "./Feedback";
+import Gallary from "./Gallery";
 
 const ArtistProfile = () => {
   const { id } = useParams();
@@ -97,6 +98,24 @@ const ArtistProfile = () => {
               >
                 Feedback
               </button>
+              <button
+                onClick={() => setTab("gallary")}
+                className={`${
+                  tab === "gallary" &&
+                  "border-b border-solid border-primaryColor"
+                } py-5 px-2 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+              >
+                Gallary
+              </button>
+              <button
+                onClick={() => setTab("documents")}
+                className={`${
+                  tab === "documents" &&
+                  "border-b border-solid border-primaryColor"
+                } py-5 px-2 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+              >
+                Documents
+              </button>
             </div>
 
             <div>
@@ -115,6 +134,55 @@ const ArtistProfile = () => {
               )}
               {tab === "feedback" && (
                 <Feedback reviews={reviews} totalRating={totalRating} />
+              )}
+              {tab === "gallary" && (
+                <div>
+                  <Gallary artistData={artist} />
+                </div>
+              )}
+              {tab === "documents" && (
+                <div>
+                  <h2 className="text-lg text-headingColor font-semibold mt-8">
+                    My Documents
+                  </h2>
+                  <div className="mt-5 space-y-4">
+                    <div className="flex flex-col">
+                      <p className="text-md text-headingColor font-semibold">
+                        Document Name
+                      </p>
+                      <p className="text-md text-textColor font-normal">
+                        {artist.documentName}
+                      </p>
+                    </div>
+                    <div className="flex flex-col mt-4">
+                      <p className="text-md text-headingColor font-semibold">
+                        Document Number
+                      </p>
+                      <p className="text-md text-textColor font-normal">
+                        {artist.documentNumber}
+                      </p>
+                    </div>
+                    <div className="flex flex-col mt-4">
+                      <p className="text-md text-headingColor font-semibold">
+                        Document Photos
+                      </p>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {artist.documentPhotos.map((photo) => (
+                          <figure
+                            key={photo}
+                            className=" border-2 border-solid border-primaryColor rounded-md"
+                          >
+                            <img
+                              src={photo}
+                              alt="Document"
+                              className="w-[200px] h-[150px] object-cover rounded-md"
+                            />
+                          </figure>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
           </div>
