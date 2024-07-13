@@ -120,79 +120,106 @@ const Signup = () => {
 
             <form onSubmit={submitHandler}>
               <div className="mb-5">
+                <label className="text-headingColor font-bold text-[16px] leading-7">
+                  Full Name
+                </label>
                 <input
                   type="text"
-                  placeholder="Full Name"
+                  placeholder="Eg: John Doe"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-gray-400 cursor-pointer"
                   required
                 />
               </div>
               <div className="mb-5">
+                <label className="text-headingColor font-bold text-[16px] leading-7">
+                  Email
+                </label>
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Eg: john@gmail.com"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-gray-400 cursor-pointer"
                   required
                 />
               </div>
               <div className="mb-5">
+                <label className="text-headingColor font-bold text-[16px] leading-7">
+                  Password
+                </label>
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder="Enter your password"
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-gray-400 cursor-pointer"
                   required
                 />
               </div>
-              <div className="mb-5">
-                <input
-                  type="number"
-                  placeholder="Phone Number"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
-                />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <div className="mb-5">
+                  <label className="text-headingColor font-bold text-[16px] leading-7">
+                    Phone Number
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Eg: 9841234567"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-gray-400 cursor-pointer"
+                    required
+                  />
+                </div>
+                <div className="mb-5">
+                  <label className="text-headingColor font-bold text-[16px] leading-7">
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Eg: Kathmandu"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleInputChange}
+                    className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-gray-400 cursor-pointer"
+                    required
+                  />
+                </div>
               </div>
-              <div className="mb-5">
-                <input
-                  type="text"
-                  placeholder="Location"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
-                />
-              </div>
-              <div className="mb-5">
-                <input
-                  type="text"
-                  placeholder="Document Name"
-                  name="documentName"
-                  value={formData.documentName}
-                  onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
-                  required
-                />
-              </div>
-              <div className="mb-5">
-                <input
-                  type="text"
-                  placeholder="Document Number"
-                  name="documentNumber"
-                  value={formData.documentNumber}
-                  onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
-                  required
-                />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <div className="mb-5">
+                  <label className="text-headingColor font-bold text-[16px] leading-7">
+                    Document Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Eg: Passport, Citenzenship"
+                    name="documentName"
+                    value={formData.documentName}
+                    onChange={handleInputChange}
+                    className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-gray-400 cursor-pointer"
+                    required
+                  />
+                </div>
+                <div className="mb-5">
+                  <label className="text-headingColor font-bold text-[16px] leading-7">
+                    Document Number
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Eg: 123456789"
+                    name="documentNumber"
+                    value={formData.documentNumber}
+                    onChange={handleInputChange}
+                    className="w-full pr-4 py-3 border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-gray-400 cursor-pointer"
+                    required
+                  />
+                </div>
               </div>
 
               <div className="flex items-center gap-3 mt-4">
@@ -209,7 +236,7 @@ const Signup = () => {
                   </figure>
                 ))}
 
-                <div className="relative w-[130px] h-[50px]">
+                <div className="relative w-[200px] h-[50px]">
                   <input
                     type="file"
                     name="documentPhotos"
@@ -297,7 +324,7 @@ const Signup = () => {
                     name="role"
                     value={formData.role}
                     onChange={handleInputChange}
-                    className="w-full py-[0.625rem] px-[1rem] border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer bg-transparent"
+                    className="w-full py-[0.625rem] px-[1rem] border-b border-solid border-[#35727B] focus:outline-none focus:border-b-primaryColor text-lg lg:text-[16px] leading-7 text-headingColor placeholder:text-gray-400 cursor-pointer bg-transparent"
                   >
                     <option value="customer">Customer</option>
                     <option value="artist">Makeup Artist</option>
